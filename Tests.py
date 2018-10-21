@@ -343,7 +343,23 @@ def test_load_db(file):
 
 def test_create_filtered_peptides_files_according_to_cdr3 (non_info_file, info_file, CDR3_info_file, db_dict, peptides_dict):
     db.create_filtered_peptides_files_according_to_cdr3(non_info_file, info_file, CDR3_info_file, db_dict, peptides_dict)
-
+    test_db = {'SDFvcxvrgferwt0 ' : 'DSFSDF' ,\
+               'GGTESSFFSFSW': 'aSS' ,\
+               'ASRFGSASASAGGDDS' : 'GGGDD', \
+               'AASDADDDSEES': 'WEWDS',\
+               'GGYYYYfvcxvgtt' : 'DSFSDF', \
+               'GGYYYYfdfdfderer': 'aGYYY',\
+                'GGTESSFSaadfgfgggSW': 'aSS'}
+    test_peptides_dict = {'FVCXV':2,\
+                          'dfdfd':3,\
+                          'GYYY':2, \
+                          'SS':1}
+    db.create_filtered_peptides_files_according_to_cdr3('test2_non.txt', 'test2_info.txt', 'test2_cdr3.txt', test_db,
+                                                        test_peptides_dict)
+    print('test2 files:\n'+
+          'non: GYYY,\n'+
+          'info: FVCXV, dfdfd\n'+
+          'cdr3: SS')
 
 
 
