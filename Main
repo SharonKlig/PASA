@@ -1,7 +1,7 @@
-import FilterExcelFile as ps
-import DB_analysis as fi
+import FilterExcelFile as fe
+import DB_analysis as dbf
 
-#path = '/Data/'
+
 day0_file = '6597_JL_5a-0.xlsx'
 day10_file = '6597_JL_5a-10.xlsx'
 db_file = 'IBD_001_D10_MBC IGH.fasta'
@@ -10,12 +10,12 @@ output = 'filtered_peptiides.txt'
 
 if __name__ == '__main__':
 
-    days0 = ps.pre_process_on_file(day0_file)
-    days10 = ps.pre_process_on_file(day10_file)
-    data, peptides_dict = ps.check_if_appears_in_flow_through(days0, days10)
-    ps.create_new_filtered_file(peptides_dict, output)
-    db = fi.load_db(db_file)
-    fi.create_filtered_peptides_files_according_to_cdr3('non_informative_filitered_peptides.txt',
+    days0 = fe.pre_process_on_file(day0_file)
+    days10 = fe.pre_process_on_file(day10_file)
+    data, peptides_dict = fe.check_if_appears_in_flow_through(days0, days10)
+    fe.create_new_filtered_file(peptides_dict, output)
+    db = dbf.load_db(db_file)
+    dbf.create_filtered_peptides_files_according_to_cdr3('non_informative_filitered_peptides.txt',
                                                         'informative_filitered_peptides.txt',
                                                         'CDR3_informative_filitered_peptides.txt', db, peptides_dict)
 

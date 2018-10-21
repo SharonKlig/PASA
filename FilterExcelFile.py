@@ -57,8 +57,8 @@ def create_names_dict (data, mode):
     mode 2 - total_names_dict - dict of peptide : how many times appears (sum of all replicates)
     mode 3 - names_dict_per_sheet - for each sheet (replicate), count how many times each peptide appears
     '''
-    total_names_dict = {}
     in_how_many_sheets_appears_dict = {}
+    total_names_dict = {}
     names_dict_per_sheet = []
 
     for sheet in data:
@@ -70,7 +70,10 @@ def create_names_dict (data, mode):
                 total_names_dict[name] += 1
             else:
                 new_names_dict[name] = 1
-                total_names_dict[name] = 1
+                if name in total_names_dict:
+                    total_names_dict[name] += 1
+                else:
+                    total_names_dict[name] = 1
                 if name in in_how_many_sheets_appears_dict:
                     in_how_many_sheets_appears_dict [name] += 1
                 else:

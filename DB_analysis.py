@@ -14,7 +14,7 @@ def load_db (file):
             if (re.search('sp', line) or re.search('tr', line)):
                 continue
             else:
-                if (re.search('IGH', line)) or (re.search('IBD', line)):
+                if (re.search('IGH', line)) and (re.search('IBD', line)):       #for the old db might appear only IGH- check
                     if first == False:
                         db_dict[seq] = cdr3
                     else:
@@ -30,6 +30,7 @@ def load_db (file):
         if flag == True:
             seq = seq+ line.rstrip('\n')
 
+    db_dict[seq] = cdr3  #the last one
     return db_dict
 
 
@@ -45,7 +46,7 @@ def create_filtered_peptides_files_according_to_cdr3 (non_info_file, info_file, 
     for key_p, value_p in new_p_dict.items():
         in_db_flag = False
         for key_db, value_db in db_dict.items():
-            if similarity(key_db , key_p, 100):         #change to persentage of similarity
+            if similarity(key_p, key_db , 100):         #change to persentage of similarity
                 new_p_dict[key_p][1].append(value_db)
                 in_db_flag = True
         if in_db_flag == False:
@@ -75,7 +76,7 @@ def create_filtered_peptides_files_according_to_cdr3 (non_info_file, info_file, 
 
 
 def similarity(seq, sub_seq, num):
-    if sub_seq.upper() in seq.upper():          #check
+    if seq.upper() in sub_seq.upper():          #check
         return True
     else:
         return False
