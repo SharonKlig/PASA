@@ -91,14 +91,16 @@ def create_filtered_peptides_files_according_to_cdr3 (non_info_file, info_file, 
 def check_if_peptid_in_db (db_dict, new_peptid_dict, non_info):
     #check if peptid is in db, create a list per peptid with all db records that contain the peptid
     peptids_len = str(len(new_peptid_dict))
-    records_counter = 0
     start = timeit.timeit()
+    peptids_counter = 0
     for peptid, value_p in new_peptid_dict.items():
+        peptids_counter += 1
+        records_counter = 0
         in_db_flag = False
-        records_counter += 1
-        if (records_counter % 10000 == 0):
-            print(str(records_counter) + ' \ ' + peptids_len + ' peptides were already checked')
         for key_db, value_db in db_dict.items():
+            records_counter += 1
+            if (records_counter % 100000 == 0):
+                print('peptid ' + peptids_counter + '/' + peptids_len + ' : ' + str(records_counter) + 'peptides were already checked')
             if (create_all_I_L_combination(peptid, key_db, 100)):
                 new_peptid_dict[peptid].append(value_db)
                 in_db_flag = True
