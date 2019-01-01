@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pasa</title>
+    <!--<meta charset="utf-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+
+    <link rel="shortcut icon" type="image/x-icon" href="pics/Antibodies-n.jpg" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
+
+    <!--files for the select tag-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
+
+    <!--files for the checkbox tag (toggle)-->
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <script src="scripts/form_handler.js"></script>
+
+    <!--<link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>-->
+    <!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+    <!--<script> $(function(){-->
+        <!--$("head").load("header.html");-->
+        <!--$('#loadingMask').fadeOut();});-->
+    <!--</script>-->
+
+    <!--for hiding the advanced options by default-->
+</head>
+<body>
+<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top" id="nav">
+    <div class="jumbotron" id="jumbo">
+        <div class="container">
+            <div class="row" id="title-row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-1">
+                    <img src="pics/Antibodies-n.jpg" id="antibody_image" class="img-rounded">
+                </div>
+                <div class="col-md-9">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </span><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="nav_container">
+        <div class="
+
+		">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <ul class="nav navbar-nav" id="menu-nav">
+                    <li class="active">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="overview.html">Overview</a>
+                    </li>
+                    <li>
+                        <a href="gallery.html">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="terms.html">Terms of Use</a>
+                    </li>
+                    <li>
+                        <a href="credits.html">Credits</a>
+                    </li>
+                    <li>
+                        <a href="https://english.tau.ac.il/" id="tau-link" target="_blank">
+                            <img src=pics/TAU_LOGO.png id="tau-logo">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav><div id="behind-nav-bar">
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <form id="ASAP_form" action="https://pasa.tau.ac.il/cgi-bin/PASA_cgi.py" method="post" ENCTYPE="multipart/form-data" target="_blank" onsubmit="return validate_lib_file();">
+                <div class="container" id="basic">
+                    <input type="hidden" name="example_page" value="yes">
+                    <div class="form-group">
+                        <b>Elution raw files:</b>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/elution/elut_example_1.raw" target="_blank">elution_raw_a.raw</a>
+                        </label>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/elution/elut_example_2.raw" target="_blank">elution_raw_b.raw</a>
+                        </label>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/elution/elut_example_3.raw" target="_blank">elution_raw_c.raw</a>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <b>Flowthrough raw files:</b>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/flowthrough/ft_example_1.raw" target="_blank">flowthrough_raw_a.raw</a>
+                        </label>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/flowthrough/ft_example_2.raw" target="_blank">flowthrough_raw_b.raw</a>
+                        </label>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/flowthrough/ft_example_3.raw" target="_blank">flowthrough_raw_c.raw</a>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <b>DB files:</b>
+                        <label class="btn btn-default btn-file">
+                            <a href="example/db/db_example.tar.gz" target="_blank">db.tar.gz</a>
+                        </label>
+
+                    </div>
+
+                    <button type="button" class="btn btn-warning" id="advanced_button" onclick="openAdvanced()">Advanced options</button>
+                    <div id="advanced" style="display:none;">
+                        <b>Enzyme: </b>
+                        <select name="MMU" class="selectpicker form-control" data-width="auto" onchange="setDefaultMassSpecSeq()">
+                            <option value="ArgC"disabled>ArgC</option>
+                            <option value="AspC"disabled>AspC</option>
+                            <option value="AspN"disabled>AspN</option>
+                            <option value="Chymotrypsin"disabled>Chymotrypsin</option>
+                            <option value="Chymotrypsin+"disabled>Chymotrypsin+</option>
+                            <option value="D.P" disabled>D.P</option>
+                            <option value="GluC"disabled>GluC</option>
+                            <option value="GluN"disabled>GluN</option>
+                            <option value="LysC"disabled>LysC</option>
+                            <option value="LysC/P"disabled>LysC/P</option>
+                            <option value="LysN"disabled>LysCN</option>
+                            <option value="Trypsin" selected>Trypsin</option>
+                            <option value="Trypsin/P"disabled>Trypsin/P</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="We'll send you a link to the results" required>
+                            <input class="form-control" name="confirm_email" type="hidden">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="job_title">A descriptive job title:</label>
+                            <input type="text" class="form-control" id="job_title" name="job_title" placeholder="(optional)">
+                        </div>
+                    </div>
+
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <a href="index.html"><button type="button" class="btn btn-danger">Clear Example</button></a>
+                    <!--<a href="index.html"><button type="button" class="btn btn-info">Clear Example</button></a>-->
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

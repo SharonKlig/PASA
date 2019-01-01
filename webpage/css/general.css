@@ -1,0 +1,141 @@
+#title-row{
+    padding-top: 10px;
+}
+
+#jumbo{
+    /*font-family: 'Georgia';*/
+    font-family: "Georgia";
+	font-size: 55px;
+	color: #9DD5FC;
+    margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left: 0px;
+	margin-right: 0px;
+    padding: 5px;
+    background-color: #000000;
+    /*font-family: "Georgia","Georgia",Georgia,Georgia,sans-serif;*/
+}
+
+#antibody_image{
+    width: 100px;
+    height: 80px;
+}
+
+#asap-title{
+    margin-top: 10px;
+	margin-bottom: 20px;
+    font-size: 60px;
+
+}
+
+#sub-title{
+    font-size: 23px;
+}
+
+#nav_container{
+    font-family: 'Georgia';
+    /*font-family: "Segoe UI","Helvetica Neue",Helvetica,Georgia,sans-serif;*/
+    /*font-family: "PT Sans";*/
+    font-size: 26px;
+    /*padding-top: 10px;*/
+    line-height: 20px;
+}
+
+#ASAP_form{
+    padding-top: 20px;
+}
+
+#overview_container, #gallery_container, #credits_container{
+    /*font-family: 'Kalam';*/
+    /*font-family: "Sans";*/
+    /*font-family: "Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-size: 20px;
+}
+
+#basic{
+    /*font-family: 'Kalam';*/
+    /*font-family: "Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-size: 20px;
+}
+
+#flow{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body{
+    font-family: Ubuntu, sans-serif;
+    /*font-family: 'Kalam';*/
+}
+
+#file-button {
+    width: 150px;
+	margin-left: 150px;
+	margin-top: 150px;
+	margin-bottom: 150px;
+}
+
+#please-note{
+	margin-top: 10px;
+	margin-bottom: 0px;
+    color: red;
+}
+
+#behind-nav-bar-results{
+    padding: 60px;
+}
+
+#advanced_button{
+    margin-bottom: 30px	
+}
+
+
+td ul{
+    padding-left: 10px;
+}
+
+td h3{
+    padding-right: 10px;
+}
+
+#lib_info{
+    padding: 0px;
+    border: 0px;
+    top: 0px;
+    margin-bottom: 3px;
+    outline: none;
+}
+
+#lib_info_modal{
+    font-size: 18px;
+}
+
+.file-group1{
+    width: 420px;
+	/*margin-top: 30px;*/
+}
+
+.file-group1 label{
+    float: right;
+}
+
+.btns{
+    float: left;
+	margin-right: 75px;
+}
+
+.col-md-4{
+    margin-top: 35px;
+}
+
+.advanced-button{
+    color: grey;
+    background-color: #F0E68C;
+    border-color: 	#BDB76B;
+}
+
+.col-md-9{
+    margin-top: 0px;
+	margin-bottom: 5px;
+}
