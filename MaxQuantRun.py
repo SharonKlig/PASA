@@ -7,9 +7,8 @@ from os.path import isfile, join
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
 
 
-config_sample_folder = ''
 
-def create_xml_config_file (config_folder, params, numThreads):
+def create_xml_config_file (config_folder, params, numThreads, config_sample_folder):
 
     config_file = config_folder + 'mqpar.xml'
     copyfile(config_sample_folder + 'mqpar_template.xml', config_file)
@@ -86,8 +85,5 @@ def running_maxquant_through_cmd (config_path):
     maxquant_exe_path = 'mono ' + '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
     #subprocess.call(['module load maxquant/maxquant-1.6.3.4'])      #remove when using cgi
     subprocess.call([maxquant_exe_path, config_path])
-    #subprocess.run
-    #mono --$maxquant --version
-    # MaxQuantCmd 1.6.3.4
 
 

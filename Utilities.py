@@ -11,19 +11,6 @@ from distutils.dir_util import copy_tree
 
 
 
-logging.basicConfig(filename='Logs/main.log',level=logging.DEBUG)
-logging.debug('This message should go to the log file')
-
-#pickles files (debugging)
-pickle_folder = 'Pickles/'
-pickle_file_e = pickle_folder + "pickle_file_e.pkl"
-pickle_file_f = pickle_folder + "pickle_file_f.pkl"
-pickle_file_p = pickle_folder + "pickle_file_p.pkl"
-pickle_file_db = pickle_folder + "pickle_file_db.pkl"
-pickle_file_non_info = pickle_folder + "pickle_file_non_info.pkl"
-pickle_file_info = pickle_folder + "pickle_file_info.pkl"
-pickle_file_cdr3 = pickle_folder + "pickle_file_cdr3.pkl"
-
 
 def parse_parameters():
 
@@ -44,8 +31,7 @@ def parse_parameters():
     return args
 
 
-def check_if_zip_file (input):
-    db_folder = 'DB_files/'
+def check_if_zip_file (input, db_folder):
     try:
         os.mkdir(db_folder)
     except FileExistsError:
@@ -60,9 +46,8 @@ def check_if_zip_file (input):
         tar.close()
         sub_folder = input.split('/')[-1].replace('.tar.gz' , '')
         copy_tree(db_folder + sub_folder, db_folder)
-
     #elif input.endswith('.rar'):
-        #patoolib.extract_archive(input, outdir=db_folder)
+     #   patoolib.extract_archive(input, outdir=db_folder)
     elif input.endswith('.fasta'):
         copyfile(input, db_folder + input.split('/')[-1])
     else:
