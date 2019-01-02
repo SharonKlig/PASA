@@ -8,7 +8,10 @@ import os
 import MaxQuantRun as mq
 from Files_and_Contants import *
 
-
+try:
+    file = open(logs + 'main.log', 'r')
+except IOError:
+    file = open(logs + 'main.log', 'w')
 logging.basicConfig(filename=logs + 'main.log',level=logging.DEBUG)
 logging.debug('This message should go to the log file')
 
