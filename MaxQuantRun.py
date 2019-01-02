@@ -82,8 +82,12 @@ def create_directories(directory, root):
 
 
 def running_maxquant_through_cmd (config_path):
+    config_file = config_path + 'mqpar.xml'
     maxquant_exe_path = '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
     #subprocess.call(['module load maxquant/maxquant-1.6.3.4'])      #remove when using cgi
-    subprocess.run(['mono', maxquant_exe_path, config_path])
-
+    subprocess.run(['mono', maxquant_exe_path, config_file])
+    #args = maxquant_exe_path + config_path
+    #subprocess.run(['maxquant', config_path])
+    #subprocess.call(args, stdout=NULL, stderr=NULL, shell=False)
+    #os.system(maxquant_exe_path + config_path)
 
