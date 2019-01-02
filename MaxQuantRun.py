@@ -82,8 +82,8 @@ def create_directories(directory, root):
 
 
 def running_maxquant_through_cmd (config_path):
-    maxquant_exe_path = 'mono ' + '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
+    maxquant_exe_path = '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
     #subprocess.call(['module load maxquant/maxquant-1.6.3.4'])      #remove when using cgi
-    subprocess.call([maxquant_exe_path, config_path])
+    subprocess.run(['mono', maxquant_exe_path, config_path])
 
 
