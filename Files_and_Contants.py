@@ -3,7 +3,7 @@ import logging
 import os
 
 #hard coded folders
-bin = '/groups/pupko/kligsberg/FinalProject/' #so the HOME env variable will be ignored
+bin = '/bioseq/PASA/main.py' #so the HOME env variable will be ignored
 logs = bin + 'Logs/'
 db_folder = bin + 'DB_files/'
 pickle_folder = bin + 'Pickles/'
