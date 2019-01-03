@@ -3,11 +3,26 @@ import logging
 import os
 
 #hard coded folders
-bin = '/bioseq/PASA/main.py' #so the HOME env variable will be ignored
+bin = '/groups/pupko/kligsberg/FinalProject/' #so the HOME env variable will be ignored
 logs = bin + 'Logs/'
 db_folder = bin + 'DB_files/'
 pickle_folder = bin + 'Pickles/'
 config_sample_folder = bin
+
+try:
+    os.mkdir (logs)
+except FileExistsError:
+    logging.info("Directory ", logs, " already exists")
+
+try:
+    os.mkdir(db_folder)
+except FileExistsError:
+    logging.info("Directory ", db_folder, " already exists")
+
+try:
+    os.mkdir(pickle_folder)
+except FileExistsError:
+    logging.info("Directory ", pickle_folder, " already exists")
 
 
 #pickles files (debugging)
