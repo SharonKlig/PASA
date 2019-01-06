@@ -1,7 +1,7 @@
 import logging
 import argparse
 import FilterExcelFile as fe
-import DB_analysis_v2 as dbf
+import DB_analysis as dbf
 import Statistics_and_Plots as sp
 import pickle
 import os
