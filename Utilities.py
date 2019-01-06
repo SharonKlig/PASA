@@ -8,6 +8,7 @@ import tarfile
 from shutil import copyfile
 #import patoolib
 from distutils.dir_util import copy_tree
+import pickle
 
 
 
@@ -31,11 +32,22 @@ def parse_parameters():
     return args
 
 
+
+def read_or_new_pickle(path, default):
+    if os.path.isfile(path):
+        with open(path, "rb") as f:
+            try:
+                return pickle.load(f)
+            except Exception:
+                pass
+    with open(path, "wb") as f:
+        pickle.dump(default, f)
+    return default
+
+
+
 def check_if_zip_file (input, db_folder):
-    try:
-        os.mkdir(db_folder)
-    except FileExistsError:
-        logging.info("Directory ", db_folder, " already exists")
+
     if input.endswith('.zip'):
         f_zip = zipfile.ZipFile(input)
         f_zip.extractall(db_folder)
