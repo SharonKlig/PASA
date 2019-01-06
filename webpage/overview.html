@@ -82,89 +82,94 @@
 </nav>	<div id="behind-nav-bar">
 	</div>
 	<div class="container" id="overview_container">
-		<div class="row">
-			<div class="col-md-1">
-			</div>
-			<div class="col-md-10" align="justify">
-				<h2>Introduction</h2>
-				TBD
-				<br><br>
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10" align="justify">
+			<h2>Introduction</h2>
+			Shotgun high-resolution proteomics antibodies is necessary for understanding the
+            dynamics and composition of polyclonal antibodies circulating in serum 1 . At steady
+            state circulating antibodies are produced by terminally differentiated B cells but after
+            exposure to antigen the humoral response generates a diverse antibody repertoire
+            due to SHM and V(D)J recombination 2,3 . For that reason, it is important to unveil
+            whether the Igs encoded by the peripheral blood B cells correspond to antibodies
+            present in circulation. Moreover, addressing questions as what are the relative
+            concentrations of serum antigen-specific monoclonal antibodies (within the
+            polyclonal pool), what are their repertoire features (e.g. V(D)J family usage, CDR3
+            length etc.) is important in order to shed light on mechanisms related to the
+            development of the immune response.
 
-				<!--<h2>What is PASA?</h2>-->
-				<!--The PASA webserver is a "one-stop shop" for conducting such microbial genomics data analyses via a simple graphical user interface (GUI) without any installations, making this processes efficient and easy and allows scientists to analyze hundreds of bacterial genomes, with a click of a button. An example of features which are implemented in M1CR0BIALIZ3R include:-->
-				<!--<li>-->
-					<!--Extracting all open reading frames (ORFs) [<a href="#ref1">1</a>];-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--Analyzing presence-absence patterns of genes;-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--Detecting and extracting orthologous sets sequences from ORFs [<a href="#ref2">2</a>, <a href="#ref3">3</a>];-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--Align orthologous sets sequences [<a href="#ref4">4</a>];-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--Reconstructing a phylogenetic tree [<a href="#ref5">5</a>];-->
-				<!--</li>-->
-				<!--&lt;!&ndash;<li>&ndash;&gt;-->
-					<!--&lt;!&ndash;Identifying selective sweeps events (Avram et al., in preparation);&ndash;&gt;-->
-				<!--&lt;!&ndash;</li>&ndash;&gt;-->
-				<!--&lt;!&ndash;<li>&ndash;&gt;-->
-					<!--&lt;!&ndash;Inferring GC content variation among species lineages;&ndash;&gt;-->
-				<!--&lt;!&ndash;</li>&ndash;&gt;-->
-				<!--<br>-->
+			<br><br>
 
-				<!--<h2>Input</h2>-->
-				<!--The input for the webserver is a <a href="https://linhost.info/2012/08/gzip-files-in-windows/" target="_blank">tar gzipped folder</a> in which each file is a <a href="https://en.wikipedia.org/wiki/FASTA_format#FASTA_file" target="_blank">fasta nucleic acid (.fna) file</a> containing genomic sequences of a different species (whether fully sequenced or as contigs)-->
-				<!--<br><br>-->
+			<h2>What is PASA?</h2>
+			PASA webserver is user-friendly, free and open to all users and there is no login
+            requirement. PASA allows generating quantitative molecular measurements related
+            to serum antibody repertoire from high-resolution proteomic data. The PASA
+            webserver is applicable for researchers at all levels that are interested in addressing
+            basic questions related to B cell development and differentiation, as well as an
+            application focused tool for vaccine development, immunodiagnostic discovery and
+            monoclonal antibody engineering.
 
-				<!--&lt;!&ndash;<br><br>&ndash;&gt;-->
-				<!--&lt;!&ndash;<img src="pics/flow.jpg" id="flow">&ndash;&gt;-->
-				<!--&lt;!&ndash;<br><br>&ndash;&gt;-->
+			<br><br>
 
-				<!--<h2>Output and methodology<br></h2>-->
-				<!--The output of the webserver contains the following:-->
-				<!--<li>-->
-					<!--A reliable species phylogeny tree (both in a Newick format and as a ready-to-publish figure);-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--A curated table of orthologous sets;-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--A fasta file for each orthologous set containing the UNALIGNED sequences of the set members;-->
-				<!--</li>-->
-				<!--<li>-->
-					<!--A fasta file for each orthologous set containing the ALIGNED sequences of the set members;-->
-				<!--</li>-->
+			<h2>Input</h2>
+			The webserver accepts proteomics spectral files in raw format, up to 3 technical
+            replicates to each fraction elution/flow through. For the integration with data derived
+            from NGS of antibody encoding B cells the user is requested to upload V gene
+            sequence database at the amino acid level in Fasta format. This database can be
+            generated from our recently published ASAP server 4 that facilitates the analysis of
+            sequences derived from NGS (see http://www.asap.tau.ac.il).
 
-				<!--&lt;!&ndash;In addition, further analyses can be made upon a simple user request (i.e., click on a checkbox) such as:&ndash;&gt;-->
-				<!--&lt;!&ndash;TODO&ndash;&gt;-->
-				<!--<br><br>-->
+			<br><br>
+			<img src="pics/flow.jpg" id="flow">
+			<br><br>
 
-				<!--All these analyses are presented graphically, as can be demonstrated in our-->
-				<!--<a href="gallery.html">gallery section</a>.-->
+			<h2>Output and methodology<br></h2>
+			By far the highest diversity in antibodies occurs within the CDRH3 region 5 , which is
+            overwhelmingly responsible for antigen recognition. The CDRH3 is thus considered
+            as a unique identifier of antibody clones and hence is the focus of our analysis. Our
+            methodology is divided into two parts. The first part utilizes the MaxQuant 6,7 , a
+            proteomic search algorithm that is used by PASA to identify the sequences of
+            peptides derived from serum antibodies. PASA accepts up to three technical
+            replicates of proteomic spectral files from LC-MS/MS of antibodies that were
+            enriched by affinity chromatography against a given antigen (elution) and up to three
+            replicates of proteomic spectral files from LC-MS/MS of antibodies that were
+            depleted from the antigen specific antibodies (flow through). The output from the first
+            step is a list of high confidence peptide sequences that are mapped to an antibody
+            sequence in the NGS database. In the second part, the identified peptides are
+            filtered and mapped to unique antibodies. The final file contains information about
+            somatic hyper mutation rates, CDRH3 lengths, V(D)J family usage, cell type,
+            antibody isotype and V(D)J recombination linkage of identified serum antibodies.
+            The output of the webserver includes detailed log files, graphical representation of
+            the analysis and a final high confidence serum antibody V gene sequence archive in
+            a Fasta format.
+
+			<br>
 
 
-				<!--<br><br>-->
 
-				<!--<h2>References</h2>-->
+			<br><br>
 
-				<!--<li><a href="https://doi.org/10.1186/1471-2105-11-119" target="_blank" id="ref1">Hyatt D., et al., <i>BMC Bioinformatics</i> 11, 119 (2010).</a></li>-->
-				<!--<br>-->
-				<!--<li><a href="https://doi.org/10.1016/S0022-2836(05)80360-2" target="_blank" id="ref2">Altschul SF., et al., <i>J Mol Biol</i> 215, 403-410 (1990).</a></li>-->
-				<!--<br>-->
-				<!--&lt;!&ndash;<li><a href="https://doi.org/10.1093/bioinformatics/btl158" target="_blank" id="ref2">Li W. & Godzik A., <i>Bioinformatics</i> 22, 1658-1659 (2006).</a></li>&ndash;&gt;-->
-				<!--&lt;!&ndash;<br>&ndash;&gt;-->
-				<!--<li><a href="https://dspace.library.uu.nl/bitstream/handle/1874/848/full.pdf?sequence=1&isAllowed=y" target="_blank" id="ref3">Van Dongen SM., <i>Thesis</i> (2000).</a></li>-->
-				<!--<br>-->
-				<!--<li><a href="https://doi.org/10.1093/molbev/mst010" target="_blank" id="ref4">Katoh K. & Standley DM., <i>Mol Biol Evol</i> 30, 772-780 (2013)</a></li>-->
-				<!--<br>-->
-				<!--<li><a href="https://doi.org/10.1093/bioinformatics/btu033" target="_blank" id="ref5">Stamatakis A., <i>Bioinformatics</i> 30, 1312-1313 (2014)</a></li>-->
-				<!--<br><br>-->
-			</div>
+			<h2>References</h2>
+			<li><a href="https://pubs.acs.org/doi/abs/10.1021/ac4037679" target="_blank" id="ref1">Boutz, D. R. et al. Proteomic identification of monoclonal antibodies from serum. Anal. Chem. (2014). doi:10.1021/ac4037679.</a></li>
+			<br>
+			<li><a href="https://www.pnas.org/content/110/8/2993" target="_blank" id="ref2">Wine, Y. et al. Molecular deconvolution of the monoclonal antibodies that comprise the polyclonal serum response. Proc. Natl. Acad. Sci. (2013). doi:10.1073/pnas.1213737110.</a></li>
+			<br>
+			<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/24469811" target="_blank" id="ref3">Lavinder, J. J. et al. Identification and characterization of the constituent human serum antibodies elicited by vaccination. Proc. Natl. Acad. Sci. (2014). doi:10.1073/pnas.1317793111.</a></li>
+			<br>
+			<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6077260/" target="_blank" id="ref4">Avram, O. et al. ASAP - A Webserver for Immunoglobulin-Sequencing Analysis Pipeline. Front. Immunol. 9, 1–12 (2018)..</a></li>
+			<br>
+			<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/10933393" target="_blank" id="ref5">Xu, J. L. & Davis, M. M. Diversity in the CDR3 region of V(H) is sufficient for most antibody specificities. Immunity (2000). doi:10.1016/S1074-7613(00)00006-6.</a></li>
+			<br>
+			<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/19029910" target="_blank" id="ref6">Cox, J. & Mann, M. MaxQuant enables high peptide identification rates, individualized p.p.b.-range mass accuracies and proteome-wide protein quantification. Nat. Biotechnol. (2008). doi:10.1038/nbt.1511.</a></li>
+			<br>
+			<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/24942700" target="_blank" id="ref7">Cox, J. et al. Accurate Proteome-wide Label-free Quantification by Delayed Normalization and Maximal Peptide Ratio.</a></li>
+
+
+			<br><br>
 		</div>
 	</div>
+</div>
 </body>
 </html>
 
