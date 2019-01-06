@@ -3,7 +3,9 @@ import logging
 import os
 
 #hard coded folders
-bin = '/groups/pupko/kligsberg/FinalProject/' #so the HOME env variable will be ignored
+#bin = '/groups/pupko/kligsberg/FinalProject/' #so the HOME env variable will be ignored
+#bin = '/bioseq/PASA/' #so the HOME env variable will be ignored
+bin = ''
 logs = bin + 'Logs/'
 db_folder = bin + 'DB_files/'
 pickle_folder = bin + 'Pickles/'
@@ -12,17 +14,17 @@ config_sample_folder = bin
 try:
     os.mkdir (logs)
 except FileExistsError:
-    logging.info("Directory ", logs, " already exists")
+    pass
 
 try:
     os.mkdir(db_folder)
 except FileExistsError:
-    logging.info("Directory ", db_folder, " already exists")
+    pass
 
 try:
     os.mkdir(pickle_folder)
 except FileExistsError:
-    logging.info("Directory ", pickle_folder, " already exists")
+    pass
 
 
 #pickles files (debugging)
@@ -79,7 +81,23 @@ if False: #old paths, without maxquant
     day10_file = input_folder + 'flowthrough.xlsx'
     pictures_folder = output_files + "pics/"
     output = output_files + 'filtered_peptides.txt'
+    logs = 'Logs/'
+    db_folder = 'DB_files/'
+    pickle_folder = 'Pickles/'
+
+    pickle_file_e = pickle_folder + "pickle_file_e.pkl"
+    pickle_file_f = pickle_folder + "pickle_file_f.pkl"
+    pickle_file_p = pickle_folder + "pickle_file_p.pkl"
+    pickle_file_db = pickle_folder + "pickle_file_db.pkl"
+    pickle_file_non_info = pickle_folder + "pickle_file_non_info.pkl"
+    pickle_file_info = pickle_folder + "pickle_file_info.pkl"
+    pickle_file_cdr3 = pickle_folder + "pickle_file_cdr3.pkl"
+    pickle_file_db_peptides = pickle_folder + "pickle_file_db_peptides.pkl"
+
+
+    # config_sample_folder = bin
 
 #CONTANTS
 Y = 10
 numThreads = 8
+IsDebug = 1
