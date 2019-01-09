@@ -46,7 +46,7 @@
                     <img src="pics/Antibodies-n.jpg" id="antibody_image" class="img-rounded">
                 </div>
                 <div class="col-md-9">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
                 </div>
             </div>
         </div>
@@ -91,47 +91,47 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-10" id="basic">
-            <form id="ASAP_form" action="https://asap.tau.ac.il/cgi-bin/ASAP_cgi.py" method="post" ENCTYPE="multipart/form-data" target="_blank" onsubmit="return validate_read_files() && validate_lib_file();">
+            <form id="PASA_form" action="https://pasa.tau.ac.il/cgi-bin/PASA_cgi.py" method="post" ENCTYPE="multipart/form-data" target="_blank" onsubmit="return validate_read_files() && validate_lib_file();">
                     <input type="hidden" name="example_page" value="no">
                     <div id="please-note" align="justify">Please notice that files larger than 100MB may require up to 30 minutes to be uploaded, depending on your network speed. It is possible and recommended to upload zipped fastq files (gz format).</div>
                     <br><br>
                     <div class="form-group">
                         <b>Elution raw data 1:</b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run1_R1" required>  <!--onchange="$('#upload-file-info').val($(this).val());"-->
+                            <div name="file_button"></div> <input type="file" name="elution_data_1" required>  <!--onchange="$('#upload-file-info').val($(this).val());"-->
                         </label>
                     </div>
                     <div class="form-group">
                         <b>Elution raw data 2:</b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run2_R1">
+                            <div name="file_button"></div> <input type="file" name="elution_data_2">
                         </label>
                     </div>
                     <div class="form-group">
                         <b>Elution raw data 3:</b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run3_R1">
+                            <div name="file_button"></div> <input type="file" name="elution_data_3">
                         </label>
 
                     </div>
                     <div class="form-group">
                         <b>Flowthrough raw data 1:</b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run4_R1">
+                            <div name="file_button"></div> <input type="file" name="flowthrough_data_1">
                         </label>
 
                     </div>
                     <div class="form-group">
                         <b>Flowthrough raw data 2:</b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run5_R1">
+                            <div name="file_button"></div> <input type="file" name="flowthrough_data_2">
                         </label>
 
                     </div>
                     <div class="form-group">
                         <b>Flowthrough raw data 3:</b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run6_R1">
+                            <div name="file_button"></div> <input type="file" name="flowthrough_data_3">
                         </label>
 
                     </div>
@@ -147,7 +147,7 @@
                     <div class="form-group">
                         <b>DB files: </b>
                         <label class="btn btn-default btn-file">
-                            <div name="file_button"></div> <input type="file" name="run6_R1">
+                            <div name="file_button"></div> <input type="file" name="database">
                         </label>
                     </div>
                     <div class="form-group row">
@@ -165,7 +165,7 @@
                     <button type="button" class="btn btn-warning" id="advanced_button" onclick="openAdvanced()">Advanced options</button>
                     <div id="advanced" style="display:none;">
                         <b>Enzyme: </b>
-                        <select name="MMU" class="selectpicker form-control" data-width="auto" onchange="setDefaultMassSpecSeq()">
+                        <select name="enzyme" class="selectpicker form-control" data-width="auto">
                             <option value="ArgC">ArgC</option>
                             <option value="AspC">AspC</option>
                             <option value="AspN">AspN</option>
