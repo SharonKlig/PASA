@@ -3,13 +3,11 @@ import logging
 import os
 
 #hard coded folders
-#bin = '/groups/pupko/kligsberg/FinalProject/' #so the HOME env variable will be ignored
-#bin = '/bioseq/PASA/' #so the HOME env variable will be ignored
-bin = ''
-logs = bin + 'Logs/'
-db_folder = bin + 'DB_files/'
-pickle_folder = bin + 'Pickles/'
-config_sample_folder = bin
+src_folder = '/bioseq/PASA/'
+logs = src_folder + 'Logs/'
+db_folder = src_folder + 'DB_files/'
+pickle_folder = src_folder + 'Pickles/'
+config_sample_folder = src_folder
 
 try:
     os.mkdir (logs)
@@ -44,8 +42,8 @@ db_file = args.db_file
 enzyme = args.digestion_enzyme
 wd = args.work_folder
 
-path_input_e = wd + "/elution_files/"
-path_input_f = wd + "/flowthrough_files/"
+path_input_e = wd + "elution_files/"
+path_input_f = wd + "flowthrough_files/"
 
 try:
     os.mkdir (path_input_e)
@@ -62,6 +60,7 @@ maxquant_output_f_folder = path_input_f + "combined/txt/"
 day0_file = maxquant_output_e_folder + 'peptides.txt'
 day10_file = maxquant_output_f_folder + 'peptides.txt'
 
+
 config_folder_e = path_input_e
 config_folder_f = path_input_f
 sample_config = wd
@@ -74,16 +73,19 @@ pictures_folder = output_files + "pics/"
 output = output_files + 'filtered_peptides.txt'
 
 if False: #old paths, without maxquant
-    db_folder = 'DB_files/'
+    src_folder = ''
+    wd = src_folder
+    logs = src_folder + 'Logs/'
+    db_folder = src_folder + 'DB_files/'
+    pickle_folder = src_folder + 'Pickles/'
+    config_sample_folder = src_folder
+
     input_folder = 'input_files/'
     output_files = "output_files/"
     day0_file = input_folder + 'elution.xlsx'
     day10_file = input_folder + 'flowthrough.xlsx'
     pictures_folder = output_files + "pics/"
     output = output_files + 'filtered_peptides.txt'
-    logs = 'Logs/'
-    db_folder = 'DB_files/'
-    pickle_folder = 'Pickles/'
 
     pickle_file_e = pickle_folder + "pickle_file_e.pkl"
     pickle_file_f = pickle_folder + "pickle_file_f.pkl"
@@ -94,10 +96,19 @@ if False: #old paths, without maxquant
     pickle_file_cdr3 = pickle_folder + "pickle_file_cdr3.pkl"
     pickle_file_db_peptides = pickle_folder + "pickle_file_db_peptides.pkl"
 
+    raw_files_e_1, raw_files_e_2, raw_files_e_3 = input_folder + '6597_JL_5a.raw', input_folder+ '6597_JL_5b.raw', input_folder+ '6597_JL_5c.raw'
+    raw_files_f_1, raw_files_f_2, raw_files_f_3 = input_folder + '6597_JL_6a.raw', input_folder+ '6597_JL_6b.raw', input_folder+ '6597_JL_6c.raw'
+    db_file = 'test_db/DB_files.tar.gz'
+    enzyme = "Trypsin"
 
-    # config_sample_folder = bin
+    path_input_e = wd + "elution_files/"
+    path_input_f = wd + "flowthrough_files/"
+    config_folder_e = path_input_e
+    config_folder_f = path_input_f
+
+
 
 #CONTANTS
 Y = 10
 numThreads = 8
-IsDebug = 1
+IsDebug = True
