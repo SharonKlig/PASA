@@ -1,5 +1,5 @@
 import subprocess
-import xml.etree.cElementTree as ET
+import xml.etree.ElementTree as ET
 from shutil import copyfile
 import regex as re
 import os.path
@@ -8,74 +8,75 @@ from xml.etree.ElementTree import Element, SubElement, Comment, tostring
 
 
 
-def create_xml_config_file (config_folder, params, numThreads, config_sample_folder):
+def create_xml_config_file(config_folder, params, numThreads, config_sample_folder):
 
     sample_config = config_sample_folder + 'mqpar_template.xml'
     config_file = config_folder + 'mqpar.xml'
-    copyfile(sample_config , config_file)
+    #copyfile(sample_config, config_file)
 
     tree = ET.parse(sample_config)
-    #root = tree.getroot()
-    root = tree.getroot ()
+    # root = tree.getroot()
+    root = tree.getroot()
 
-    #raw files
-    raw = ET.SubElement(root,'filePaths')
-    experiments = ET.SubElement(root,'experiments')
-    for file, exp_name  in zip ([params[0], params[1],params[2]] , ['a', 'b', 'c']):
-        create_raw_file(file, raw, exp_name , experiments)
 
-    # db files
-    fasta_db = ET.SubElement(root, "fastaFiles")
+    # raw files
+    rawFilesobj = root.find('filePaths')
+    rawFilesobj2 = rawFilesobj.findall('string')
+    experiments = root.find('experiments')
+    experiments2 = experiments.findall('string')
+    for file_name, exp_name, i in zip([params[0], params[1], params[2]], ['a', 'b', 'c'], [0, 1, 2]):
+         create_raw_file(file_name, rawFilesobj2, exp_name, experiments, i)
+
+
+    #db files
+    fasta_db = root.find('fastaFiles')
     db_files = [join(params[3], file) for file in os.listdir(params[3])]
     for file in db_files:
         create_fasta_db_file(file, fasta_db)
 
-    enz = ET.SubElement(root, 'enzymes')
-    enz.attrib = params[4]
+    root.find('parameterGroups/parameterGroup/enzymes/string').text = params[4]
 
-    thre = ET.SubElement(root, 'numThreads')
-    thre.attrib = numThreads
+    root.find('numThreads').text = str(numThreads)
 
     create_directories(params[5], root)
 
     tree.write(config_file)
+    #new_tree = ET.tostringlist(tree, encoding="us-ascii", method="xml")
+    #new_tree.write(config_file)
 
 
-def create_raw_file(raw_file, raw, exp_name, experiment):
-    raw_file_obj = ET.SubElement(raw, "string")
-    raw_file_obj.attrib = raw_file
-    exp_obj = ET.SubElement(experiment, "string")
-    exp_obj.attrib = exp_name
+def create_raw_file(file_name, rawFilesobj, exp_name, experiments, i):
+        rawFilesobj[i].text = file_name
+        experiments[i].text = exp_name
 
 
-def create_fasta_db_file (fasta_file, fasta_db):
+
+def create_fasta_db_file(fasta_file, fasta_db):
     fastaFileInfo = ET.SubElement(fasta_db, "FastaFileInfo")
     d1 = ET.SubElement(fastaFileInfo, "fastaFilePath")
-    d1.attrib =  fasta_file
+    d1.text = fasta_file
     d2 = ET.SubElement(fastaFileInfo, "identifierParseRule")
-    d2.attrib = '([^\s]*)'
+    d2.text = '([^\s]*)'
     d3 = ET.SubElement(fastaFileInfo, "descriptionParseRule")
-    d3.attrib = "(.*)"
+    d3.text = "(.*)"
     d4 = ET.SubElement(fastaFileInfo, "taxonomyParseRule")
-    d4.attrib = ""
+    d4.text = ""
     d5 = ET.SubElement(fastaFileInfo, "variationParseRule")
-    d5.attrib = ""
+    d5.text = ""
     d6 = ET.SubElement(fastaFileInfo, "modificationParseRule")
-    d6.attrib = ""
+    d6.text = ""
     d7 = ET.SubElement(fastaFileInfo, "taxonomyId")
-    d7.attrib = ""
+    d7.text = ""
+    ET.dump(fasta_db)
+
 
 
 
 def create_directories(directory, root):
-    d1 = ET.SubElement(root, "pluginFolder")
-    d1.attrib = directory
-    d2 = ET.SubElement(root, "tempFolder")
-    d2.attrib = directory
-    d3 = ET.SubElement(root, "fixedSearchFolder")
-    d3.attrib = directory
-    d4 = ET.SubElement(root, "fixedCombinedFolder")
-    d4.attrib = directory
+    root.find('pluginFolder').text = directory
+    root.find('tempFolder').text = directory
+    root.find('fixedSearchFolder').text = directory
+    root.find('fixedCombinedFolder').text = directory
 
 
 
