@@ -42,7 +42,7 @@
                     <img src="pics/Antibodies-n.jpg" id="antibody_image" class="img-rounded">
                 </div>
                 <div class="col-md-9">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
                 </div>
             </div>
         </div>
@@ -88,10 +88,12 @@
 		<div class="col-md-10" align="justify">
 			<h2>Introduction</h2>
 			Shotgun high-resolution proteomics antibodies is necessary for understanding the
-            dynamics and composition of polyclonal antibodies circulating in serum 1 . At steady
+            dynamics and composition of polyclonal antibodies circulating in
+            serum [<a href="https://pubs.acs.org/doi/abs/10.1021/ac4037679">1</a>]. At steady
             state circulating antibodies are produced by terminally differentiated B cells but after
             exposure to antigen the humoral response generates a diverse antibody repertoire
-            due to SHM and V(D)J recombination 2,3 . For that reason, it is important to unveil
+            due to SHM and V(D)J recombination [<a href="https://www.pnas.org/content/110/8/2993">2</a>,
+            <a href="https://www.ncbi.nlm.nih.gov/pubmed/24469811">3</a>] . For that reason, it is important to unveil
             whether the Igs encoded by the peripheral blood B cells correspond to antibodies
             present in circulation. Moreover, addressing questions as what are the relative
             concentrations of serum antigen-specific monoclonal antibodies (within the
@@ -117,18 +119,21 @@
             replicates to each fraction elution/flow through. For the integration with data derived
             from NGS of antibody encoding B cells the user is requested to upload V gene
             sequence database at the amino acid level in Fasta format. This database can be
-            generated from our recently published ASAP server 4 that facilitates the analysis of
-            sequences derived from NGS (see http://www.asap.tau.ac.il).
+            generated from our recently published ASAP webserver [<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6077260">4</a>] that facilitates the analysis of
+            sequences derived from NGS (see <a href="http://asap.tau.ac.il">http://asap.tau.ac.il</a> for more details).
 
 			<br><br>
 			<img src="pics/flow.jpg" id="flow">
 			<br><br>
 
 			<h2>Output and methodology<br></h2>
-			By far the highest diversity in antibodies occurs within the CDRH3 region 5 , which is
+			By far the highest diversity in antibodies occurs within the CDRH3 region
+            [<a href="https://www.ncbi.nlm.nih.gov/pubmed/10933393">5</a>] , which is
             overwhelmingly responsible for antigen recognition. The CDRH3 is thus considered
             as a unique identifier of antibody clones and hence is the focus of our analysis. Our
-            methodology is divided into two parts. The first part utilizes the MaxQuant 6,7 , a
+            methodology is divided into two parts. The first part utilizes the MaxQuant
+            [<a href="https://www.ncbi.nlm.nih.gov/pubmed/19029910">6</a> ,
+            <a href="https://www.ncbi.nlm.nih.gov/pubmed/24942700">7</a>] a
             proteomic search algorithm that is used by PASA to identify the sequences of
             peptides derived from serum antibodies. PASA accepts up to three technical
             replicates of proteomic spectral files from LC-MS/MS of antibodies that were
@@ -157,7 +162,7 @@
 			<br>
 			<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/24469811" target="_blank" id="ref3">Lavinder, J. J. et al. Identification and characterization of the constituent human serum antibodies elicited by vaccination. Proc. Natl. Acad. Sci. (2014). doi:10.1073/pnas.1317793111.</a></li>
 			<br>
-			<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6077260/" target="_blank" id="ref4">Avram, O. et al. ASAP - A Webserver for Immunoglobulin-Sequencing Analysis Pipeline. Front. Immunol. 9, 1–12 (2018)..</a></li>
+			<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6077260" target="_blank" id="ref4">Avram, O. et al. ASAP - A Webserver for Immunoglobulin-Sequencing Analysis Pipeline. Front. Immunol. 9, 1–12 (2018)..</a></li>
 			<br>
 			<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/10933393" target="_blank" id="ref5">Xu, J. L. & Davis, M. M. Diversity in the CDR3 region of V(H) is sufficient for most antibody specificities. Immunity (2000). doi:10.1016/S1074-7613(00)00006-6.</a></li>
 			<br>
