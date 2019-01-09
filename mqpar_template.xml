@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MaxQuantParams xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <fastaFiles>
-      <FastaFileInfo>
-      </FastaFileInfo>
    </fastaFiles>
    <fastaFilesProteogenomics>
    </fastaFilesProteogenomics>
    <fastaFilesFirstSearch>
    </fastaFilesFirstSearch>
-   <fixedSearchFolder></fixedSearchFolder>
+   <fixedSearchFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</fixedSearchFolder>
    <andromedaCacheSize>350000</andromedaCacheSize>
    <advancedRatios>True</advancedRatios>
    <pvalThres>0.005</pvalThres>
@@ -111,13 +109,13 @@
    <useSeriesReporters>False</useSeriesReporters>
    <name>session1</name>
    <maxQuantVersion>1.6.4.0</maxQuantVersion>
-   <tempFolder></tempFolder>
-   <pluginFolder></pluginFolder>
-   <numThreads>1</numThreads>
+   <tempFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</tempFolder>
+   <pluginFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</pluginFolder>
+   <numThreads>8</numThreads>
    <emailAddress></emailAddress>
    <smtpHost></smtpHost>
    <emailFromAddress></emailFromAddress>
-   <fixedCombinedFolder></fixedCombinedFolder>
+   <fixedCombinedFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</fixedCombinedFolder>
    <fullMinMz>-1.79769313486232E+308</fullMinMz>
    <fullMaxMz>1.79769313486232E+308</fullMaxMz>
    <sendEmail>False</sendEmail>
@@ -128,8 +126,14 @@
    <showIsotopeMassDifferences>False</showIsotopeMassDifferences>
    <useDotNetCore>False</useDotNetCore>
    <filePaths>
+      <string> /bioseq/PASA/example_data/6597_JL_5a.raw</string>
+      <string> /bioseq/PASA/example_data/6597_JL_5b.raw</string>
+      <string> /bioseq/PASA/example_data/6597_JL_5c.raw</string>
    </filePaths>
    <experiments>
+      <string>a</string>
+      <string>b</string>
+      <string>c</string>
    </experiments>
    <fractions>
       <short>32767</short>
@@ -203,7 +207,7 @@
             <string>Carbamidomethyl (C)</string>
          </fixedModifications>
          <enzymes>
-            <string></string>
+            <string>Trypsin</string>
          </enzymes>
          <enzymesFirstSearch>
          </enzymesFirstSearch>

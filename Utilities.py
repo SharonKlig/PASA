@@ -9,6 +9,10 @@ from shutil import copyfile
 #import patoolib
 from distutils.dir_util import copy_tree
 import pickle
+import csv
+import openpyxl
+import scipy as sp
+
 
 
 
@@ -33,16 +37,24 @@ def parse_parameters():
 
 
 
-def read_or_new_pickle(path, default):
-    if os.path.isfile(path):
-        with open(path, "rb") as f:
-            try:
-                return pickle.load(f)
-            except Exception:
-                pass
-    with open(path, "wb") as f:
-        pickle.dump(default, f)
-    return default
+def read_or_new_pickle(IsDebug, path, default):
+    '''
+    if dubug mode is off, dont ever use pickles.
+    if dubug mode is on, check if pickle is available and load it or create a new one if not.
+    '''
+    if IsDebug == False:
+        return default
+    else:
+        if os.path.isfile(path):
+            with open(path, "rb") as f:
+                try:
+                    return pickle.load(f)
+                except Exception:
+                    pass
+        with open(path, "wb") as f:
+            pickle.dump(default, f)
+        return default
+
 
 
 
@@ -68,5 +80,5 @@ def check_if_zip_file (input, db_folder):
 
 
 
-#
+
 
