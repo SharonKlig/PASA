@@ -6,10 +6,11 @@ import csv
 import os
 import os.path
 from pathlib import Path
+import sys
 
 
 
-def read_from_excel(file):
+def read_from_excel_with_sheets(file):
     '''
     This funcation fits to excel file with multi sheets
     :param file: xlsx file
@@ -36,6 +37,20 @@ def read_from_excel(file):
             data.append(record)
         res.append(data)
     return res
+
+
+def read_from_excel(file):
+
+    if (os.path.isfile(file)) == False:
+        logging.error("ERROR, missing file" + file)
+    csv.field_size_limit(100000000)
+    data =[]
+    with open(file, newline='') as f:
+        f_reader = csv.DictReader(f, delimiter='\t')#, quoting=csv.QUOTE_NONE)
+        for raw in f_reader:
+            data.append(dict(raw))
+    return (data)
+
 
 
 def filter_plus (line):
@@ -147,7 +162,7 @@ def is_present_in_2_replicates (line, peptid_dict, sum_mean_intensity_all_peptid
 
 def pre_process_on_file (file):
 
-    data =  read_from_excel(file)
+    data = read_from_excel(file)
     peptid_dict = {}
     parsed_data = []
     sum_mean_intensity_all_peptides = [0]
