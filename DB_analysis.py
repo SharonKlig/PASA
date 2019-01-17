@@ -9,6 +9,10 @@ import DB_record as dbr
 import timeit
 import re
 import time
+#from Files_and_Constants import log_file
+
+logger = logging.getLogger('Logs/PASA_pipeline.log')
+
 
 current_milli_time = lambda: int(round(time.time() * 1000))
 #import magic
@@ -26,7 +30,7 @@ def load_db (folder):
     db_dict = {}
     for file, label in zip(files, range(1,len(files)+1)):
         if (isfile(file)) == False:
-            logging.error("ERROR, missing file " + str(file))
+            logger.error("ERROR, missing file " + str(file))
             continue
         file = open(file, 'r')
         lines = file.readlines()
@@ -70,6 +74,8 @@ def load_db (folder):
         db_rec.seq = seq    #the last one
         db_dict[seq] = db_rec
         counter += 1
+
+    print(str(counter) + ' already loaded, db num: ' + str(db_rec.db_num)+ '\n')
     return db_dict
 
 
@@ -141,7 +147,7 @@ def check_if_peptid_in_db (db_dict, new_peptid_dict, non_info):
 def check_if_cdr3_is_common (new_peptid_dict, non_info , info , CDR3_info):
     #for all peptides that are in db, check if cdr3 is common
     print('now checking CDR3\n')
-    logging.info('now checking CDR3')
+    logger.info('now checking CDR3')
     records_counter = 0
     counter_CDR3 = 0
     counter_info = 0
@@ -253,9 +259,7 @@ def check_all_combinations_similarity(peptid_permutations, other_seq, threshold)
 
 def create_all_I_L_combination(peptid):
     '''
-    create all combinations of the peptis replacing L with I (and vice versa)
-    :param: peptid
-    :return:
+    create all combinations of the peptid replacing L with I (and vice versa)
     '''
 
     sum_I_L = peptid.count('I') + peptid.count('L')
