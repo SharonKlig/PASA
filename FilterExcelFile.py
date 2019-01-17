@@ -7,6 +7,9 @@ import os
 import os.path
 from pathlib import Path
 import sys
+from Files_and_Constants import log_file
+
+logger = logging.getLogger('Logs/PASA_pipeline.log')
 
 
 
@@ -17,7 +20,7 @@ def read_from_excel_with_sheets(file):
     :return: res- array with cell for each sheet.
     '''
     if(os.path.isfile(file)) == False:
-        logging.error("ERROR, missing file" + file)
+        logger.error("ERROR, missing file" + file)
     wb = xlrd.open_workbook(file , on_demand=True)
     sheets = wb.sheet_names()
     res = []
@@ -42,7 +45,7 @@ def read_from_excel_with_sheets(file):
 def read_from_excel(file):
 
     if (os.path.isfile(file)) == False:
-        logging.error("ERROR, missing file" + file)
+        logger.error("ERROR, missing file" + file)
     csv.field_size_limit(100000000)
     data =[]
     with open(file, newline='') as f:
@@ -54,10 +57,8 @@ def read_from_excel(file):
 
 
 def filter_plus (line):
-    if ((line['Reverse'] != '+') and (line['Potential contaminant'] != '+')):
-        return True
-    else:
-        return False
+    return ((line['Reverse'] != '+') and (line['Potential contaminant'] != '+'))
+
 
 '''
 def filter_confidence_PSM (data):
@@ -136,24 +137,28 @@ def is_present_in_2_replicates (line, peptid_dict, sum_mean_intensity_all_peptid
     if line['Sequence'] == "":
         return False
     if not(isinstance(line['Sequence'], str)) :
-        logging.error("line is not valid. peptid: " + line['Sequence']+"\n" )
+        logger.error("line is not valid. peptid: " + line['Sequence']+"\n" )
         return False
     try:
-        rep1, rep2, rep2 = line['Intensity A'],line['Intensity B'], line['Intensity C']
+        rep1, rep2, rep3 = line['Intensity A'],line['Intensity B'], line['Intensity C']
     except:
-        rep1, rep2, rep2 = line['Intensity D'], line['Intensity E'], line['Intensity F']
+        rep1, rep2, rep3 = line['Intensity a'], line['Intensity b'], line['Intensity c']
+    try:
+        rep1, rep2, rep3 = float(rep1), float(rep2), float(rep3)
+    except:
+        pass
     cnt = 0
-    for rep in [rep1, rep2, rep2]:
-        if not(isinstance(rep, float)):
-            logging.error("line is not valid. peptid: " + line['Sequence'] + " intensity: " + str(line['Intensity'])+"\n")
+    for rep in [rep1, rep2, rep3]:
+        if not (isinstance(rep, float)):
+            logger.error("line is not valid. peptid: " + line['Sequence'] + " intensity: " + str(line['Intensity']) + "\n")
             continue
         if rep != 0 :
             cnt += 1
     if cnt >= 2:
-        sum_intensity = rep1 + rep2 + rep2
+        sum_intensity = rep1 + rep2 + rep3
         #calculate mean intensity for each peptid
         mean_intensity = sum_intensity / cnt
-        peptid_dict[line['Sequence']] = [mean_intensity, None]
+        peptid_dict[line['Sequence']] = [mean_intensity, None, sum_intensity]
         sum_mean_intensity_all_peptides[0] += mean_intensity
         return True
     else:
@@ -164,15 +169,17 @@ def pre_process_on_file (file):
 
     data = read_from_excel(file)
     peptid_dict = {}
-    parsed_data = []
+    #parsed_data = []
     sum_mean_intensity_all_peptides = [0]
-    for sheet in data:
-        new_list = [line for line in sheet if (filter_plus (line) and is_present_in_2_replicates (line, peptid_dict, sum_mean_intensity_all_peptides))]
-        parsed_data.append(new_list)
+    # for sheet in data:            #if there are multi sheets in excel
+    #     new_list = [line for line in sheet if (filter_plus (line) and is_present_in_2_replicates (line, peptid_dict, sum_mean_intensity_all_peptides))]
+    #     parsed_data.append(new_list)
+    new_list = [line for line in data if (filter_plus(line) and is_present_in_2_replicates(line, peptid_dict, sum_mean_intensity_all_peptides))]
+    #parsed_data.append(new_list)
     for key, value in peptid_dict.items():
-        value[1] = value[0] / sum_mean_intensity_all_peptides[0]
+        value[1] = value[0] / sum_mean_intensity_all_peptides[0]         #value[1] is the "relative intensity out of intensities"
 
-    return parsed_data, peptid_dict
+    return new_list, peptid_dict
 
 '''
 def check_if_appears_in_flow_through (days0, days10):
