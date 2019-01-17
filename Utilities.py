@@ -6,14 +6,16 @@ import zipfile
 import gzip
 import tarfile
 from shutil import copyfile
-#import patoolib
+import patoolib
 from distutils.dir_util import copy_tree
 import pickle
+import shutil
 import csv
 import openpyxl
 import scipy as sp
+#from Files_and_Constants import log_file
 
-
+logger = logging.getLogger('Logs/PASA_pipeline.log')
 
 
 
@@ -31,6 +33,7 @@ def parse_parameters():
     parser.add_argument('db_file', help='file or zip file of db ')
     parser.add_argument('digestion_enzyme', help='digestion_enzyme')
     parser.add_argument('work_folder', help='work directory path')
+    parser.add_argument('user_email', help='user email')
 
     args = parser.parse_args()
     return args
@@ -68,10 +71,13 @@ def check_if_zip_file (input, db_folder):
         tar = tarfile.open(input)
         tar.extractall(db_folder)
         tar.close()
-        sub_folder = input.split('/')[-1].replace('.tar.gz' , '')
-        copy_tree(db_folder + sub_folder, db_folder)
-    #elif input.endswith('.rar'):
-     #   patoolib.extract_archive(input, outdir=db_folder)
+        try: #if there is a sub folder inside the folder
+            sub_folder = input.split('/')[-1].replace('.tar.gz' , '')
+            copy_tree(db_folder + sub_folder, db_folder)
+        except:
+            pass
+    elif input.endswith('.rar'):
+        patoolib.extract_archive(input, outdir=db_folder)
     elif input.endswith('.fasta'):
         copyfile(input, db_folder + input.split('/')[-1])
     else:
@@ -79,6 +85,24 @@ def check_if_zip_file (input, db_folder):
 
 
 
+def create_dir1(path):
+    try:
+        os.makedirs(path)
+        logger.info(f'Creating directory: {path}')
+    except OSError as exception:
+        logger.info(f'Directory already exists: {path}')
 
 
+def create_dir2(path):
+    if os.path.exists(path):
+        logger.info(f'Directory already exists: {path}')
+    else:
+        logger.info(f'Creating directory: {path}')
+        os.makedirs(path)
+
+
+def remove_content_dir_or_create(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
 
