@@ -1,5 +1,7 @@
 import os
+#from Files_and_Constants import log_file
 
+#logger = logging.getLogger(log_file)
 
 def add_closing_html_tags(html_path, CONSTS, run_number):
     with open(html_path, 'a') as f:
@@ -40,11 +42,11 @@ def edit_success_html(html_path, final_output_dir_name, run_number, CONSTS, file
     if file_names == None:
         file_names = ['filtered_peptides.txt', 'informative_CDR3_peptides.tsv',
                       'informative_peptides.tsv', 'non_informative_peptides.tsv',
-                      'cdr3_length_distributions.png', 'IGH_D_counts.png',
-                      'IGH_V_counts.png', 'IGH_J_counts.png',
-                      'IGH_VD_counts.png', 'IGH_VJ_counts.png',
-                      'IGH_DJ_counts.png', 'IGH_VDJ_counts.png',
-                      'proteomics_vs_genetics.png']
+                      'pics/cdr3_length_distributions.png', 'pics/IGH_D_counts.png',
+                      'pics/IGH_V_counts.png', 'pics/IGH_J_counts.png',
+                      'pics/IGH_VD_counts.png', 'pics/IGH_VJ_counts.png',
+                      'pics/IGH_DJ_counts.png', 'pics/IGH_VDJ_counts.png',
+                      'pics/proteomics_vs_genetics.png']
 
     if strs_to_show_on_html == None:
         strs_to_show_on_html = ['List of curated peptides', 'List of informative CDR3 peptides',
@@ -68,12 +70,12 @@ def edit_success_html(html_path, final_output_dir_name, run_number, CONSTS, file
 
     html_text += f'<div class="container" style="{CONSTS.CONTAINER_STYLE}">\n' \
         f'<h2>RESULTS:<h2>'\
-        f'<h3><b><a href=\'{final_output_dir_name}.zip\' target=\'_blank\'>Download zipped full results (textual & visual)</a></b></h3>' \
         f'<table class="table">\n' \
         f'<thead>\n' \
         f'<tr><th><h3>Quick access to selected results:</h3></th></tr>\n' \
         f'</thead>\n' \
         f'<tbody>'
+    # f'<h3><b><a href=\'{final_output_dir_name}.zip\' target=\'_blank\'>Download zipped full results (textual & visual)</a></b></h3>' \
 
     for i in range(len(file_names)):
         html_text += get_html_string_of_restult(file_names[i], strs_to_show_on_html[i])
@@ -95,7 +97,8 @@ def edit_failure_html(html_path, run_number, msg, CONSTS):
         html_text = html_text.replace('RUNNING', 'FAILED').replace(f'{CONSTS.WEBSERVER_NAME} is now processing your request. This page will be automatically updated every {CONSTS.RELOAD_INTERVAL} seconds (until the job is done). You can also reload it manually. Once the job has finished, several links to the output files will appear below. ', '')
     except FileNotFoundError:
         import logging
-        logger = logging.getLogger('main')
+        logger = logging.getLogger('Logs/PASA_pipeline.log')
+        logger = logging.getLogger()
         logger.warning(f"Couldn't find html prefix at: {html_path}")
 
     html_text +=f'<br><br><br>\n' \
