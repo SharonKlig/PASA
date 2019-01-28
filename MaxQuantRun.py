@@ -35,10 +35,13 @@ def create_xml_config_file(config_folder, params, numThreads, config_sample_fold
     db_files = [join(params[3], file) for file in os.listdir(params[3])]
     for file in db_files:
         create_fasta_db_file(file, fasta_db)
+    indent(fasta_db)
 
     root.find('parameterGroups/parameterGroup/enzymes/string').text = params[4]
 
     root.find('numThreads').text = str(numThreads)
+
+    root.find('maxQuantVersion').text = fc.maxquant_version
 
     create_directories(params[5], root)
 
@@ -76,6 +79,21 @@ def create_directories(directory, root):
     root.find('tempFolder').text = directory
     root.find('fixedSearchFolder').text = directory
     root.find('fixedCombinedFolder').text = directory
+
+def indent(elem, level=0):
+    i = "\n" + level*"  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for elem in elem:
+            indent(elem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
 
 
 def running_maxquant_through_cmd (config_path):
