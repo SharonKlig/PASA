@@ -8,6 +8,7 @@ import os.path
 from pathlib import Path
 import sys
 from Files_and_Constants import log_file
+import numpy as np
 
 logger = logging.getLogger('Logs/PASA_pipeline.log')
 
@@ -170,14 +171,15 @@ def pre_process_on_file (file):
     data = read_from_excel(file)
     peptid_dict = {}
     #parsed_data = []
-    sum_mean_intensity_all_peptides = [0]
+    sum_mean_intensity_all_peptides = [0]  #it's a list to update it by refernce
     # for sheet in data:            #if there are multi sheets in excel
     #     new_list = [line for line in sheet if (filter_plus (line) and is_present_in_2_replicates (line, peptid_dict, sum_mean_intensity_all_peptides))]
     #     parsed_data.append(new_list)
     new_list = [line for line in data if (filter_plus(line) and is_present_in_2_replicates(line, peptid_dict, sum_mean_intensity_all_peptides))]
     #parsed_data.append(new_list)
+
     for key, value in peptid_dict.items():
-        value[1] = value[0] / sum_mean_intensity_all_peptides[0]         #value[1] is the "relative intensity out of intensities"
+        value[1] = value[0] / sum_mean_intensity_all_peptides[0]         #value[1] is the "relative intensity out of intensities", value[0] = mean intensity for each peptid (sum intensity\#replicates)
 
     return new_list, peptid_dict
 
@@ -211,15 +213,21 @@ def check_if_appears_in_flow_through (peptides_dict_0, peptides_dict_10 , Y):
     return (new_data)
 
 
-def create_new_filtered_file (list, file):
-    file = open(file, 'w')
+def create_new_filtered_file (list, file, peptides_dict_eb, peptides_dict_ft):
+    file = open(file, 'wt', newline='')
+    tsv_writer = csv.writer(file, delimiter='\t')
+    head = ['Peptid_name', 'Average_intensity_elution', 'Average frequency_elution', 'Average_intensity_flowthrough', 'Average frequency_flowthrough']
+    #file.write( head + "\n")
+    tsv_writer.writerow(head)
     for item in list:
-        file.write(item +"\n")
+        eb = peptides_dict_eb.get(item)
+        ft =  peptides_dict_ft.get(item)
+        if ft == None:
+            ft = ['0', '0']
+        row = str(item)+'\t'+ str(eb[0])+'\t'+ str(eb[1])+'\t'+ str(ft[0])+'\t'+ str(ft[1])
+        #tsv_writer.writerow(row)
+        file.write(row +"\n")
     file.close()
-
-
-
-
 
 
 

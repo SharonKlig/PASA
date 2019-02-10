@@ -6,20 +6,16 @@ import os.path
 from os.path import isfile, join
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
 import Files_and_Constants as fc
-#import Files_test as fc
-
-
 
 
 
 def create_xml_config_file(config_folder, params, numThreads, config_sample_folder):
 
-    sample_config = config_sample_folder + 'mqpar_template.xml'
-    config_file = config_folder + 'mqpar.xml'
+    sample_config = os.path.join(config_sample_folder , 'mqpar_template.xml')
+    config_file = os.path.join(config_folder , 'mqpar.xml')
     #copyfile(sample_config, config_file)
 
     tree = ET.parse(sample_config)
-    # root = tree.getroot()
     root = tree.getroot()
 
     # raw files
@@ -28,7 +24,7 @@ def create_xml_config_file(config_folder, params, numThreads, config_sample_fold
     experiments = root.find('experiments')
     experiments2 = experiments.findall('string')
     for file_name, exp_name, i in zip([params[0], params[1], params[2]], ['a', 'b', 'c'], [0, 1, 2]):
-         create_raw_file(file_name, rawFilesobj2, exp_name, experiments, i)
+         create_raw_file(file_name, rawFilesobj2, exp_name, experiments2, i)
 
     #db files
     fasta_db = root.find('fastaFiles')
@@ -38,11 +34,8 @@ def create_xml_config_file(config_folder, params, numThreads, config_sample_fold
     indent(fasta_db)
 
     root.find('parameterGroups/parameterGroup/enzymes/string').text = params[4]
-
     root.find('numThreads').text = str(numThreads)
-
     root.find('maxQuantVersion').text = fc.maxquant_version
-
     create_directories(params[5], root)
 
     tree.write(config_file)
@@ -75,10 +68,11 @@ def create_fasta_db_file(fasta_file, fasta_db):
 
 
 def create_directories(directory, root):
-    root.find('pluginFolder').text = directory
-    root.find('tempFolder').text = directory
-    root.find('fixedSearchFolder').text = directory
+    #root.find('pluginFolder').text = directory
+    #root.find('tempFolder').text = directory
+    #root.find('fixedSearchFolder').text = directory
     root.find('fixedCombinedFolder').text = directory
+
 
 def indent(elem, level=0):
     i = "\n" + level*"  "
@@ -97,7 +91,7 @@ def indent(elem, level=0):
 
 
 def running_maxquant_through_cmd (config_path):
-    config_file = config_path + 'mqpar.xml'
+    config_file = os.path.join(config_path , 'mqpar.xml')
     subprocess.run(['mono', fc.maxquant_exe_path, config_file])
-    #subprocess.run(['C:/Users/Sharon/Desktop/MaxQuant_1.6.4.0_ybLYtwW/MaxQuant/MaxQuantCmd.exe', config_file])
+
 

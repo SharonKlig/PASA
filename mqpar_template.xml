@@ -6,7 +6,7 @@
    </fastaFilesProteogenomics>
    <fastaFilesFirstSearch>
    </fastaFilesFirstSearch>
-   <fixedSearchFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</fixedSearchFolder>
+   <fixedSearchFolder></fixedSearchFolder>
    <andromedaCacheSize>350000</andromedaCacheSize>
    <advancedRatios>True</advancedRatios>
    <pvalThres>0.005</pvalThres>
@@ -109,13 +109,13 @@
    <useSeriesReporters>False</useSeriesReporters>
    <name>session1</name>
    <maxQuantVersion>1.6.4.0</maxQuantVersion>
-   <tempFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</tempFolder>
-   <pluginFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</pluginFolder>
+   <tempFolder></tempFolder>
+   <pluginFolder></pluginFolder>
    <numThreads>8</numThreads>
    <emailAddress></emailAddress>
    <smtpHost></smtpHost>
    <emailFromAddress></emailFromAddress>
-   <fixedCombinedFolder>/groups/pupko/kligsberg/pasa_test/elution_files/</fixedCombinedFolder>
+   <fixedCombinedFolder></fixedCombinedFolder>
    <fullMinMz>-1.79769313486232E+308</fullMinMz>
    <fullMaxMz>1.79769313486232E+308</fullMaxMz>
    <sendEmail>False</sendEmail>
@@ -126,9 +126,9 @@
    <showIsotopeMassDifferences>False</showIsotopeMassDifferences>
    <useDotNetCore>False</useDotNetCore>
    <filePaths>
-      <string> /bioseq/PASA/example_data/6597_JL_5a.raw</string>
-      <string> /bioseq/PASA/example_data/6597_JL_5b.raw</string>
-      <string> /bioseq/PASA/example_data/6597_JL_5c.raw</string>
+      <string></string>
+      <string></string>
+      <string></string>
    </filePaths>
    <experiments>
       <string>a</string>

@@ -15,8 +15,7 @@ logger = logging.getLogger('Logs/PASA_pipeline.log')
 
 
 current_milli_time = lambda: int(round(time.time() * 1000))
-#import magic
-import zipfile
+
 
 
 def load_db (folder):
@@ -78,7 +77,7 @@ def load_db (folder):
     print(str(counter) + ' already loaded, db num: ' + str(db_rec.db_num)+ '\n')
     return db_dict
 
-
+'''
 def create_filtered_peptides_files_according_to_cdr3 (non_info_file, info_file, CDR3_info_file, db_dict, peptides_list):
     new_peptid_dict = {}
     info = []
@@ -95,13 +94,21 @@ def create_filtered_peptides_files_according_to_cdr3 (non_info_file, info_file, 
     create_files(non_info, info, CDR3_info, non_info_file, info_file, CDR3_info_file)
 
     return (non_info, info, CDR3_info, new_peptid_dict)
+'''
 
 
-def check_if_peptid_in_db (db_dict, new_peptid_dict, non_info):
+def check_if_peptid_in_db (db_dict, peptides_list):
     #check if peptid is in db, create a list per peptid with all db records that contain the peptid
+
+    non_info = []
+    new_peptid_dict = {}
     peptids_len = str(len(new_peptid_dict))
     start = current_milli_time()
     peptids_counter = 0
+
+    for peptid in peptides_list:
+        new_peptid_dict[peptid] = []
+
     for peptid in new_peptid_dict.keys():
         peptids_counter += 1
         records_counter = 0
@@ -144,10 +151,10 @@ def check_if_peptid_in_db (db_dict, new_peptid_dict, non_info):
     return new_peptid_dict , non_info
     '''
 
-def check_if_cdr3_is_common (new_peptid_dict, non_info , info , CDR3_info):
+def check_if_cdr3_is_common (new_peptid_dict, non_info ):
     #for all peptides that are in db, check if cdr3 is common
-    print('now checking CDR3\n')
-    logger.info('now checking CDR3')
+    info = []
+    CDR3_info = []
     records_counter = 0
     counter_CDR3 = 0
     counter_info = 0
@@ -174,14 +181,14 @@ def check_if_cdr3_is_common (new_peptid_dict, non_info , info , CDR3_info):
                 for i in range(len(value_p)-1):
                     CDR3_info.append([peptid, value_p[i].seq , value_p[i].db_num, value_p[i].ibd, value_p[i].cdr3, \
                                       value_p[i].IGHV, value_p[i].IGHD, value_p[i].IGHJ,\
-                                      value_p[i].randomletter, value_p[i].ig_x, value_p[i].num1])
+                                      value_p[i].iso_type, value_p[i].chain_type, value_p[i].counts])
 
             else:
                 counter_info += 1
                 #info.append([peptid , value_p[0][0], [value_p[x][1] for x in range (len(value_p))] ])
                 info.append([peptid, value_p[i].seq , value_p[i].db_num, value_p[i].ibd, value_p[i].cdr3, \
                                       value_p[i].IGHV, value_p[i].IGHD, value_p[i].IGHJ,\
-                                      value_p[i].randomletter, value_p[i].ig_x, value_p[i].num1])
+                                      value_p[i].iso_type, value_p[i].chain_type, value_p[i].counts])
 
     print( 'counter_CDR3: ' , counter_CDR3 ,', counter_info: ', counter_info, ', counter_non_info: ',len(non_info) ,\
            ', sum: ', counter_CDR3 + counter_info + len(non_info), ', num_peptides: ','571')
@@ -192,16 +199,18 @@ def check_if_cdr3_is_common (new_peptid_dict, non_info , info , CDR3_info):
 def create_files (non_info,  info, CDR3_info, non_info_file, info_file, CDR3_info_file ):
 
     for item, file in zip([non_info, info, CDR3_info ] , [non_info_file, info_file, CDR3_info_file ]):
-        with open(file, 'wt') as out_file:
+        with open(file, 'wt' , newline='') as out_file:
             tsv_writer = csv.writer(out_file, delimiter='\t')
             if item == non_info:
-                tsv_writer.writerow(['Peptid name'])
+                tsv_writer.writerow(['Peptid_sequence'])
                 for x in item:
-                    tsv_writer.writerow(x) #????????????????????????
+                    tsv_writer.writerow([x])
 
-            tsv_writer.writerow(['Peptid name', 'Sequence', 'db number', 'ibd', 'CDR3', 'IGHV', 'IGHD' , 'IGHJ', '?????', '???????', '??????'])
-            for x in item:
-                tsv_writer.writerow(x)
+            else:
+                #maybe add db_number (col 3)
+                tsv_writer.writerow(['Peptid_sequence', 'db_Sequence', 'ibd', 'CDR3', 'IGHV', 'IGHD' , 'IGHJ', 'iso_type', 'chain_type', 'counts'])
+                for x in item:
+                    tsv_writer.writerow([x[0], x[1], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10]])
 
 
 def similarity(seq, sub_seq, threshold):
@@ -256,6 +265,7 @@ def check_all_combinations_similarity(peptid_permutations, other_seq, threshold)
             return True
 
     return False
+
 
 def create_all_I_L_combination(peptid):
     '''

@@ -5,7 +5,7 @@ import os.path
 
 
 #CONTANTS and PARAMETERS
-Y = 10 #this parameter used when checking the frequencing ratio EB/FT
+Y = 10 #TODO: this parameter used when checking the frequencing ratio EB/FT
 numThreads = 1
 IsDebug = False
 
@@ -13,18 +13,12 @@ remote_run = True if (os.path.exists('/bioseq/PASA')) else False
 src_folder = '/bioseq/PASA/' if (remote_run == True) else ''
 
 maxquant_exe_path = '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
+maxquant_version = '1.6.3.4'
 
 #src_folder = '/groups/pupko/kligsberg/pasa_src/'
-logs = src_folder + 'Logs/'
-db_folder = src_folder + 'DB_files/'
+
 pickle_folder = src_folder + 'Pickles/'
 config_sample_folder = src_folder
-
-util.create_dir2(logs)
-util.remove_content_dir_or_create(db_folder)
-util.create_dir2(pickle_folder)
-
-log_file =logs + 'PASA_pipeline.log'
 
 #pickles files (debugging)
 pickle_file_eb = pickle_folder + "pickle_file_eb.pkl"
@@ -44,9 +38,22 @@ db_file = args.db_file
 enzyme = args.digestion_enzyme
 wd = args.work_folder
 user_email = args.user_email
+job_title = args.job_title
 
-path_input_eb = os.path.join(wd , "elution_files/")
-path_input_ft = os.path.join(wd , "flowthrough_files/")
+run_number = wd.split('/')[-2]
+html_path = os.path.join(wd, 'output.html')
+
+logs = os.path.join(wd , "Logs/")
+db_folder = os.path.join(wd , 'DB_files/')
+
+util.create_dir2(logs)
+util.create_dir2(db_folder)
+util.create_dir2(pickle_folder)
+
+log_file =logs + 'PASA_pipeline.log'
+
+path_input_eb = os.path.join(wd , "elution_files")
+path_input_ft = os.path.join(wd , "flowthrough_files")
 output_files = os.path.join(wd , "output_files/")
 pictures_folder = output_files + "pics/"
 
@@ -55,10 +62,10 @@ util.create_dir2(path_input_ft)
 util.create_dir2(output_files)
 util.create_dir2(pictures_folder)
 
-maxquant_output_eb_folder = path_input_eb + "combined/txt/"
-maxquant_output_ft_folder = path_input_ft + "combined/txt/"
-eb_file = maxquant_output_eb_folder + 'peptides.txt'
-ft_file = maxquant_output_ft_folder + 'peptides.txt'
+maxquant_output_eb_folder = os.path.join(path_input_eb ,"combined", "txt")
+maxquant_output_ft_folder = os.path.join(path_input_ft ,"combined", "txt")
+eb_file = os.path.join(maxquant_output_eb_folder , 'peptides.txt')
+ft_file = os.path.join(maxquant_output_ft_folder , 'peptides.txt')
 
 config_folder_eb = path_input_eb
 config_folder_ft = path_input_ft
@@ -68,21 +75,30 @@ util.check_if_zip_file (db_file, db_folder)
 
 filtered_peptides_file = output_files + 'filtered_peptides.txt'
 
-file_output_names = ['filtered_peptides.txt', 'informative_CDR3_peptides.tsv',
+all_file_output_names = ['filtered_peptides.txt', 'informative_CDR3_peptides.tsv',
                   'informative_peptides.tsv', 'non_informative_peptides.tsv',
-                  'pics/cdr3_length_distributions.png', 'pics/IGH_D_counts.png',
+                  'pics/cdr3_IGH_length_distributions.png', 'pics/cdr3_IGL_length_distributions.png',
+                  'pics/cdr3_IGK_length_distributions.png', 'pics/IGH_D_counts.png',
                   'pics/IGH_V_counts.png', 'pics/IGH_J_counts.png',
                   'pics/IGH_VD_counts.png', 'pics/IGH_VJ_counts.png',
                   'pics/IGH_DJ_counts.png', 'pics/IGH_VDJ_counts.png',
+                  'pics/IGK_V_counts.png', 'pics/IGK_J_counts.png',
+                  'pics/IGK_VJ_counts.png', 'pics/IGL_V_counts.png',
+                  'pics/IGL_J_counts.png', 'pics/IGL_VJ_counts.png',
+                  'pics/Isotypes_distribution.png',
                   'pics/proteomics_vs_genetics.png']
 
-strs_to_show_on_html = ['List of curated peptides', 'List of informative CDR3 peptides',
+all_strs_to_show_on_html = ['List of curated peptides', 'List of informative CDR3 peptides',
                         'List of informative NON-CDR3 peptides', 'List of NON informative peptides',
-                        'CDR3 length distribution', 'V family subgroup distribution',
-                        'D family subgroup distribution', 'J family subgroup distribution',
-                        'VD family subgroup distribution', 'VJ family subgroup distribution',
-                        'DJ family subgroup distribution', 'VDJ family subgroup distribution',
-                        'Proteomics VS Genetics']
+                        'CDR3 IGH length distribution', 'CDR3 IGL length distribution',
+                         'CDR3 IGK length distribution' ,'IGH D family subgroup distribution',
+                        'IGH V family subgroup distribution', 'IGH J family subgroup distribution',
+                        'IGH VD family subgroup distribution', 'IGH VJ family subgroup distribution',
+                        'IGH DJ family subgroup distribution', 'IGH VDJ family subgroup distribution',
+                        'IGK V family subgroup distribution', 'IGK J family subgroup distribution',
+                        'IGK VJ family subgroup distribution', 'IGL V family subgroup distribution',
+                        'IGL J family subgroup distribution', 'IGL VJ family subgroup distribution',
+                        'Isotypes distribution', 'Proteomics VS Genetics']
 
 
 

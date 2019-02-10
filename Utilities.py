@@ -22,18 +22,19 @@ logger = logging.getLogger('Logs/PASA_pipeline.log')
 def parse_parameters():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('raw_files_elution_1', help='full psth of raw file #1 of elution')
-    parser.add_argument('raw_files_elution_2', help='full psth of raw file #2 of elution')
-    parser.add_argument('raw_files_elution_3', help='full psth of raw file #3 of elution')
+    parser.add_argument('raw_files_elution_1', help='full path of raw file #1 (elution)')
+    parser.add_argument('raw_files_elution_2', help='full path of raw file #2 (elution')
+    parser.add_argument('raw_files_elution_3', help='full path of raw file #3 (elution')
 
-    parser.add_argument('raw_files_flowthrough_1', help='full psth of raw file #1 of flowthrough')
-    parser.add_argument('raw_files_flowthrough_2', help='full psth of raw file #2 of flowthrough')
-    parser.add_argument('raw_files_flowthrough_3', help='full psth of raw file #3 of flowthrough')
+    parser.add_argument('raw_files_flowthrough_1', help='full path of raw file #1 (flowthrough)')
+    parser.add_argument('raw_files_flowthrough_2', help='full path of raw file #2 (flowthrough)')
+    parser.add_argument('raw_files_flowthrough_3', help='full path of raw file #3 (flowthrough)')
 
     parser.add_argument('db_file', help='file or zip file of db ')
     parser.add_argument('digestion_enzyme', help='digestion_enzyme')
     parser.add_argument('work_folder', help='work directory path')
     parser.add_argument('user_email', help='user email')
+    parser.add_argument('job_title', help='job_title')
 
     args = parser.parse_args()
     return args
@@ -42,7 +43,7 @@ def parse_parameters():
 
 def read_or_new_pickle(IsDebug, path, default):
     '''
-    if dubug mode is off, dont ever use pickles.
+    if dubug mode is off, dont use pickles.
     if dubug mode is on, check if pickle is available and load it or create a new one if not.
     '''
     if IsDebug == False:
