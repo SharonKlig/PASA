@@ -145,6 +145,10 @@ if __name__ == '__main__':
                 db_peptides, non_info = dbf.check_if_peptid_in_db (db, peptides_list)
                 pickle._dump(db_peptides, open(FC.pickle_file_db_peptides, 'wb'))
                 pickle._dump(non_info, open(FC.pickle_file_non_info, 'wb'))
+        else:
+            db_peptides, non_info = dbf.check_if_peptid_in_db(db, peptides_list)
+
+
 
 
         print("creating filtered peptides files according to cdr3\n")   #TODO
@@ -161,6 +165,8 @@ if __name__ == '__main__':
                 pickle._dump(non_info, open(FC.pickle_file_non_info, 'wb'))
                 pickle._dump(info, open(FC.pickle_file_info, 'wb'))
                 pickle._dump(CDR3_info, open(FC.pickle_file_cdr3, 'wb'))
+        else:
+            non_info, info, CDR3_info = dbf.check_if_cdr3_is_common(db_peptides, non_info)
 
 
         print("creating non info, info and cdr3 info files\n")
@@ -202,8 +208,9 @@ if __name__ == '__main__':
 
 
 
-    except Exception:
+    except Exception as e:
 
+        logger.info(e)
         status = 'was failed'
         msg += f'PASA pipeline {status}.'
         he.edit_failure_html(FC.html_path, FC.run_number, msg, CONSTS)

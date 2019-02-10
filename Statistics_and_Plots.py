@@ -234,7 +234,7 @@ def plot_peptid_records(CDR3_info, peptides_elution, db_peptides, output_path):
     for i, txt in enumerate(list_of_cdr3):
         ax.scatter(num_of_db_list[i], elution_relative_freq[i], color='r')
         plt.scatter(num_of_db_list[i], elution_relative_freq[i], marker='x', color='red')
-        plt.text(num_of_db_list[i] + 0.3, elution_relative_freq[i] + 0.3, txt, fontsize=5)
+        plt.text(num_of_db_list[i] + 0.001, elution_relative_freq[i] + 0.001, txt, fontsize=6, color='black')
     #plt.show()
         #ax.annotate(txt, (num_of_db_list[i], elution_relative_freq[i]))
 
