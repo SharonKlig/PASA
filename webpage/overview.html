@@ -42,23 +42,21 @@
                     <img src="pics/Antibodies-n.jpg" id="antibody_image" class="img-rounded">
                 </div>
                 <div class="col-md-9">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
                 </div>
             </div>
         </div>
     </div>
     <div class="container" id="nav_container">
-        <div class="
-
-		">
+        <div class="row">
             <div class="col-md-1">
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <ul class="nav navbar-nav" id="menu-nav">
-                    <li class="active">
+                    <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="overview.html">Overview</a>
                     </li>
                     <li>
@@ -79,8 +77,9 @@
             </div>
         </div>
     </div>
-</nav>	<div id="behind-nav-bar">
-	</div>
+</nav>
+<div id="behind-nav-bar">
+</div>
 	<div class="container" id="overview_container">
 	<div class="row">
 		<div class="col-md-1">
@@ -133,21 +132,60 @@
             as a unique identifier of antibody clones and hence is the focus of our analysis. Our
             methodology is divided into two parts. The first part utilizes the MaxQuant
             [<a href="https://www.ncbi.nlm.nih.gov/pubmed/19029910">6</a> ,
-            <a href="https://www.ncbi.nlm.nih.gov/pubmed/24942700">7</a>] a
-            proteomic search algorithm that is used by PASA to identify the sequences of
-            peptides derived from serum antibodies. PASA accepts up to three technical
-            replicates of proteomic spectral files from LC-MS/MS of antibodies that were
-            enriched by affinity chromatography against a given antigen (elution) and up to three
-            replicates of proteomic spectral files from LC-MS/MS of antibodies that were
-            depleted from the antigen specific antibodies (flow through). The output from the first
-            step is a list of high confidence peptide sequences that are mapped to an antibody
-            sequence in the NGS database. In the second part, the identified peptides are
-            filtered and mapped to unique antibodies. The final file contains information about
-            somatic hyper mutation rates, CDRH3 lengths, V(D)J family usage, cell type,
-            antibody isotype and V(D)J recombination linkage of identified serum antibodies.
-            The output of the webserver includes detailed log files, graphical representation of
-            the analysis and a final high confidence serum antibody V gene sequence archive in
-            a Fasta format.
+            <a href="https://www.ncbi.nlm.nih.gov/pubmed/24942700">7</a>] a proteomic search algorithm that is used by
+            PASA to identify the sequences of peptides derived from serum
+            antibodies. PASA accepts up to three technical replicates of
+            proteomic spectral files from LC-MS/MS of antibodies that were
+            enriched by affinity chromatography against a given antigen
+            (elution) and up to three replicates of proteomic spectral files from
+            LC-MS/MS of antibodies that were depleted from the antigen
+            specific antibodies (flow through). The output from the first step is a
+            list of high confidence peptide sequences that are mapped to one of
+            the antibody sequences in the NGS database.
+            <br><br>
+
+            The output of this step is summarized in a file named:<br><br>
+            1. list_of_curated_peptides.txt (accessed via the link in the results
+            section with the same name of the file name) and lists the identified
+            peptide sequences that map to one of the antibody V genes in the
+            uploaded database. The header of the columns in this file includes
+            the following:</li>
+            <br><br>
+
+            <li>Peptide_name - the identified peptide sequence that was mapped to an antibody sequence in the uploaded database. Only peptides that received high score by MaxQuant are included in this list.</li>
+            <li>Average_Intensity_elution - the average intensity of peptides from all replicates in the elution. Peptides identified in the elution fraction are marked as peptides derived from antibodies that are antigen-specific.</li>
+            <li>Average_frequency_elution - the average frequency in the elution represents the relative abundance of the peptide in all elution replicates.</li>
+            <li>Average_Intensity_flowthrough - the average intensity of peptides from all replicates in the flowthrough fruction. Peptides identified in the flowthrough fraction are marked as peptides derived from antibodies that are not antigen-specific.</li>
+            <li>Average_frequency_flowthrough - the average frequency in the elution represents the relative abundance of the peptide in all flowthrough replicates.</li>
+            <br>
+            In the second part, the identified peptides are filtered to be mapped to antibodies and are stratified as follows: <br>
+            2. informative_CDR3_peptides - peptides that map uniquely to a specific antibody colonotype and are derived from the CDR3 region of the antibody. These peptides are used to provide the final list of identified antibodies.<br>
+            3. informative_non_CDR3_peptides - peptides that map uniquely to a specific clonotype but to a region in the antibody variable region but not to CDR3 region.<br>
+            4. Non_informative_peptides - peptides that are promiscuous thus, do not map to a unique antibody clonotype and cannot be used to identify a specific antibody.<br>
+            <br>
+            Each group of peptides are listed in a Tab Separated Values (.tsv) file and can be accessed through the links with matching names (i.e. list of informative CDR3 peptides, list of informative NON CDR3 peptides and list of NON informative peptides).
+            <br><br>
+            Both informative peptide files include the columns as follows:
+            <li>Peptide_Seqeunce - the sequence of the identified peptide</li>
+            <li>Db_sequence - the list of full antibody variable region sequence that were mapped by the peptide</li>
+            <li>Sequence_header - the header of the variable region sequence as appears in the uploaded database</li>
+            <li>CDR3 - the CDR3 sequence of the identified antibody clonotype</li>
+            <li>V_family - the V family of the identified variable region of the antibody</li>
+            <li>D_family - the D family of the identified variable region of the antibody. In case the identification is of a variable region of a light chain, this field will hold the NA value.</li>
+            <li>J_family - the J family of the identified variable region of the antibody</li>
+            <li>Chain_type - the antibody variable region chain type (i.e. IGH, IGL, IGK)</li>
+            NON informative peptide file includes a list of identified peptides without additional information as they do not contribute to the identification of non-promiscuous antibodies.<br>
+            <br>
+            5. CDR3 IGH length distribution - present a histogram of the distribution of CDR3 length from antibody heavy chains as identified by proteomic informative CDR3 peptides (see example in gallery).
+            <br><br>
+            6. CDR3 IGL length distribution - present a histogram of the distribution of CDR3 length from antibody light chains as identified by proteomic informative CDR3 peptides (see example in gallery).
+            <br><br>
+            7. The 10 links following the above result links include the distribution of V(D)J family usage and the combinations (e.g. VD, VJ) of the antibody variable regions that were identified by proteomic informative CDR3 peptides.
+            <br><br>
+            8. Isotype distribution - a pie chart showing the distribution of the antibodies that were identified by proteomic informative CDR3 peptides (see gallery for example).
+            <br><br>
+            9. Proteomics vs Genetics - this summary chart plots the relationship between the relative abundance of proteomically identified antibodies (serum antibodies) to their relative abundance as determined by NGS of the variable region of B cells.
+            <br>
 
 			<br>
 

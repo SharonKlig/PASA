@@ -31,7 +31,17 @@ logger.info('...example pipeline begins...')
 
 if __name__ == '__main__':
 
-    msg = f'job number = {FC.job_title}.\n'
+    job_title = 'NO_JOB_TITLE'
+    if os.path.exists(FC.job_title_file):
+        with open(FC.job_title_file) as f:
+            job_title = f.read().rstrip()
+
+    msg = f'job number = {job_title}.\n'
+
+    user_email = 'NO_EMAIL'
+    if os.path.exists(FC.user_email_file):
+        with open(FC.user_email_file) as f:
+            user_email = f.read().rstrip()
 
     try:
 
@@ -50,8 +60,9 @@ if __name__ == '__main__':
                           strs_to_show_on_html)
 
 
-    except Exception:
+    except Exception as e:
 
+        logger.info(e)
         status = 'was failed :('
         time.sleep(1)
         msg += f'PASA pipeline {status}.\n'
@@ -63,8 +74,8 @@ if __name__ == '__main__':
         msg += f' Results can be found at {results_location}.'
 
 
-
-    send_email('mxout.tau.ac.il', 'TAU BioSequence <bioSequence@tauex.tau.ac.il>', FC.user_email,
-               subject=f'PASA {status}.', content=msg)
+    if user_email != 'NO_EMAIL':
+        send_email('mxout.tau.ac.il', 'TAU BioSequence <bioSequence@tauex.tau.ac.il>', user_email,
+                   subject=f'PASA {status}.', content=msg)
 
     logger.info('PASA is DONE!!')

@@ -10,10 +10,12 @@ import Files_and_Constants as fc
 
 
 def create_xml_config_file(config_folder, params, numThreads, config_sample_folder):
+    '''
+    This function creates mqpar.xml file so the MaxQuant program can get all the params it needs
+    '''
 
     sample_config = os.path.join(config_sample_folder , 'mqpar_template.xml')
     config_file = os.path.join(config_folder , 'mqpar.xml')
-    #copyfile(sample_config, config_file)
 
     tree = ET.parse(sample_config)
     root = tree.getroot()
@@ -33,14 +35,21 @@ def create_xml_config_file(config_folder, params, numThreads, config_sample_fold
         create_fasta_db_file(file, fasta_db)
     indent(fasta_db)
 
+    #directories for output
+    create_directories(params[5], root)
+
+    #Label-free quantification params
+    root.find('parameterGroups/parameterGroup/lfqMode').text = '1'
+    root.find('parameterGroups/parameterGroup/fastLfq').text = 'False'
+    root.find('parameterGroups/parameterGroup/lfqMinRatioCount').text = '2'
+
+    #other params:
     root.find('parameterGroups/parameterGroup/enzymes/string').text = params[4]
     root.find('numThreads').text = str(numThreads)
     root.find('maxQuantVersion').text = fc.maxquant_version
-    create_directories(params[5], root)
+    root.find('matchBetweenRuns').text = 'False'
 
     tree.write(config_file)
-    #new_tree = ET.tostringlist(tree, encoding="us-ascii", method="xml")
-    #new_tree.write(config_file)
 
 
 def create_raw_file(file_name, rawFilesobj, exp_name, experiments, i):
@@ -68,9 +77,6 @@ def create_fasta_db_file(fasta_file, fasta_db):
 
 
 def create_directories(directory, root):
-    #root.find('pluginFolder').text = directory
-    #root.find('tempFolder').text = directory
-    #root.find('fixedSearchFolder').text = directory
     root.find('fixedCombinedFolder').text = directory
 
 
@@ -82,7 +88,7 @@ def indent(elem, level=0):
         if not elem.tail or not elem.tail.strip():
             elem.tail = i
         for elem in elem:
-            indent(elem, level+1)
+            indent(elem, level + 1)
         if not elem.tail or not elem.tail.strip():
             elem.tail = i
     else:

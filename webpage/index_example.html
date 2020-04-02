@@ -44,18 +44,16 @@
                     <img src="pics/Antibodies-n.jpg" id="antibody_image" class="img-rounded">
                 </div>
                 <div class="col-md-9">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="asap-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
                 </div>
             </div>
         </div>
     </div>
     <div class="container" id="nav_container">
-        <div class="
-
-		">
+        <div class="row">
             <div class="col-md-1">
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <ul class="nav navbar-nav" id="menu-nav">
                     <li class="active">
                         <a href="index.html">Home</a>
@@ -81,7 +79,8 @@
             </div>
         </div>
     </div>
-</nav><div id="behind-nav-bar">
+</nav>
+<div id="behind-nav-bar">
 </div>
 <div class="container">
     <div class="row">
@@ -94,59 +93,70 @@
                     <div class="form-group">
                         <b>Elution raw files:</b>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/elution/elut_example_1.raw" target="_blank">elution_raw_a.raw</a>
+                            <a href="example_data/elut_example_1.raw" target="_blank">elution_raw_a.raw</a>
                         </label>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/elution/elut_example_2.raw" target="_blank">elution_raw_b.raw</a>
+                            <a href="example_data/elut_example_2.raw" target="_blank">elution_raw_b.raw</a>
                         </label>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/elution/elut_example_3.raw" target="_blank">elution_raw_c.raw</a>
+                            <a href="example_data/elut_example_3.raw" target="_blank">elution_raw_c.raw</a>
                         </label>
                     </div>
                     <div class="form-group">
                         <b>Flowthrough raw files:</b>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/flowthrough/ft_example_1.raw" target="_blank">flowthrough_raw_a.raw</a>
+                            <a href="example_data/ft_example_1.raw" target="_blank">flowthrough_raw_a.raw</a>
                         </label>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/flowthrough/ft_example_2.raw" target="_blank">flowthrough_raw_b.raw</a>
+                            <a href="example_data/ft_example_2.raw" target="_blank">flowthrough_raw_b.raw</a>
                         </label>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/flowthrough/ft_example_3.raw" target="_blank">flowthrough_raw_c.raw</a>
+                            <a href="example_data/ft_example_3.raw" target="_blank">flowthrough_raw_c.raw</a>
                         </label>
                     </div>
                     <div class="form-group">
                         <b>DB files:</b>
                         <label class="btn btn-default btn-file">
-                            <a href="example_data/db/db_example.tar.gz" target="_blank">db.tar.gz</a>
+                            <a href="example_data/db_example.tar.gz" target="_blank">db.tar.gz</a>
                         </label>
 
                     </div>
 
                     <button type="button" class="btn btn-warning" id="advanced_button" onclick="openAdvanced()">Advanced options</button>
                     <div id="advanced" style="display:none;">
-                        <b>Enzyme: </b>
-                        <select name="enzyme" class="selectpicker form-control" data-width="auto" >
-                            <option value="ArgC"disabled>ArgC</option>
-                            <option value="AspC"disabled>AspC</option>
-                            <option value="AspN"disabled>AspN</option>
-                            <option value="Chymotrypsin"disabled>Chymotrypsin</option>
-                            <option value="Chymotrypsin+"disabled>Chymotrypsin+</option>
-                            <option value="D.P" disabled>D.P</option>
-                            <option value="GluC"disabled>GluC</option>
-                            <option value="GluN"disabled>GluN</option>
-                            <option value="LysC"disabled>LysC</option>
-                            <option value="LysC/P"disabled>LysC/P</option>
-                            <option value="LysN"disabled>LysCN</option>
-                            <option value="Trypsin" selected>Trypsin</option>
-                            <option value="Trypsin/P"disabled>Trypsin/P</option>
+                    <br>
+                        <div class="form-group row">
+                            <b>Enzyme: </b>
+                            <select name="enzyme" class="selectpicker form-control" data-width="auto" >
+                                <option value="ArgC"disabled>ArgC</option>
+                                <option value="AspC"disabled>AspC</option>
+                                <option value="AspN"disabled>AspN</option>
+                                <option value="Chymotrypsin"disabled>Chymotrypsin</option>
+                                <option value="Chymotrypsin+"disabled>Chymotrypsin+</option>
+                                <option value="D.P" disabled>D.P</option>
+                                <option value="GluC"disabled>GluC</option>
+                                <option value="GluN"disabled>GluN</option>
+                                <option value="LysC"disabled>LysC</option>
+                                <option value="LysC/P"disabled>LysC/P</option>
+                                <option value="LysN"disabled>LysCN</option>
+                                <option value="Trypsin" selected>Trypsin</option>
+                                <option value="Trypsin/P"disabled>Trypsin/P</option>
 
-                        </select>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group row">
+                                <label for="len_threshold">Frequency ratio EB/FT:</label>
+                                <input type="number" class="form-control-2" min="0" step="-1000" max="1000" id="len_threshold" name="frequency_threshold" value="10" readonly>
+                        </div>
+
                     </div>
+                    <br>
                     <div class="form-group row">
                         <div class="col-md-3">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="We'll send you a link to the results" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="We'll send you a link to the results" >
                             <input class="form-control" name="confirm_email" type="hidden">
                         </div>
                         <div class="col-md-3">

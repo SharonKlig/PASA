@@ -40,36 +40,16 @@ def plot_cdr3_length_distributions(CDR3_info, output_folder):
         title = 'cdr3_length_' + type + '_distributions'
         x_label, y_label = '\nLength of CDR3 (AA level)', 'Frequency (%)\n'
         rotation = 90
-        plot_distributions3(hist, file_name, x_label, y_label, rotation)
-
-    '''
-    n, bins, patches = plt.hist(x=CDR3_list, bins='auto', color='#0504aa',
-                                alpha=0.7, rwidth=0.85)
-    plt.grid(axis='y', alpha=0.75)
-    plt.xlabel('Length of CDR3 (AA level)')
-    plt.ylabel('Frequency (%)')
-    #plt.title('cdr3_length_distributions')
-    plt.text(23, 45, r'$\mu=15, b=3$')
-    maxfreq = n.max()
-    # Set a clean upper y-axis limit.
-    plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
-    plt.savefig(pictures_folder + 'cdr3_length_distributions.png', dpi=None, facecolor='w', edgecolor='w',
-            orientation='portrait', papertype=None, format=None,
-            transparent=False, bbox_inches=None, pad_inches=0.1,
-            frameon=None, metadata=None)
-    #plt.show()
-    '''
-
+        plot_distributions(hist, file_name, x_label, y_label, rotation)
 
 
 def plot_cdr3_combination_distributions(CDR3_info, output_folder):
-
 
     CDR3_IGH_list = [item for item in CDR3_info if item[9] == 'IGH']
     CDR3_IGK_list = [item for item in CDR3_info if item[9] == 'IGK']
     CDR3_IGL_list = [item for item in CDR3_info if item[9] == 'IGL']
 
-    for list, iso_type in zip ([CDR3_IGH_list, CDR3_IGK_list, CDR3_IGL_list] , ['IGH', 'IGK', 'IGL']):
+    for list, chain_type in zip ([CDR3_IGH_list, CDR3_IGK_list, CDR3_IGL_list] , ['IGH', 'IGK', 'IGL']):
 
         length = len(list)
         if length == 0:
@@ -77,35 +57,35 @@ def plot_cdr3_combination_distributions(CDR3_info, output_folder):
 
         V_list = [item[5] for item in list]
         J_list = [item[7] for item in list]
-        if iso_type == 'IGH':
+        if chain_type == 'IGH':
             D_list = [item[6] for item in list]
 
         V_hist, J_hist  = create_hist(V_list), create_hist(J_list)
-        if iso_type == 'IGH':
+        if chain_type == 'IGH':
             D_hist = create_hist(D_list)
 
         VJ_combination = [(V_list[i], J_list[i]) for i in range(length)]
-        if iso_type == 'IGH':
+        if chain_type == 'IGH':
             VD_combination = [(V_list[i], D_list[i]) for i in range(length)]
             DJ_combination = [(D_list[i], J_list[i]) for i in range(length)]
 
         VJ_hist= create_hist(create_hist(create_combintion_of_2(VJ_combination)))
 
-        if iso_type == 'IGH':
+        if chain_type == 'IGH':
             VD_hist, DJ_hist = create_hist(create_combintion_of_2(VD_combination)), create_hist(create_combintion_of_2(DJ_combination))
             VDJ_combination = [(V_list[i], D_list[i], J_list[i]) for i in range(length)]
             VDJ_hist = create_hist(create_combintion_of_3(VDJ_combination))
 
         IGx_V_counts_file, IGx_D_counts_file, IGx_J_counts_file, IGx_VD_counts_file, IGx_VJ_counts_file, \
-        IGx_DJ_counts_file, IGx_VDJ_counts_file = output_folder + iso_type + '_V_counts.png', \
-                                                  output_folder + iso_type + '_D_counts.png', \
-                                                  output_folder + iso_type + '_J_counts.png', \
-                                                  output_folder + iso_type + '_VD_counts.png', \
-                                                  output_folder + iso_type + '_VJ_counts.png', \
-                                                  output_folder + iso_type + '_DJ_counts.png', \
-                                                  output_folder + iso_type + '_VDJ_counts.png'
+        IGx_DJ_counts_file, IGx_VDJ_counts_file = output_folder + chain_type + '_V_counts.png', \
+                                                  output_folder + chain_type + '_D_counts.png', \
+                                                  output_folder + chain_type + '_J_counts.png', \
+                                                  output_folder + chain_type + '_VD_counts.png', \
+                                                  output_folder + chain_type + '_VJ_counts.png', \
+                                                  output_folder + chain_type + '_DJ_counts.png', \
+                                                  output_folder + chain_type + '_VDJ_counts.png'
 
-        if iso_type == 'IGH':
+        if chain_type == 'IGH':
             for item, file in zip([V_hist, D_hist, J_hist, VD_hist, VJ_hist, DJ_hist, VDJ_hist],\
                                 [IGx_V_counts_file, IGx_D_counts_file, IGx_J_counts_file, IGx_VD_counts_file, IGx_VJ_counts_file, \
                                 IGx_DJ_counts_file, IGx_VDJ_counts_file]):
@@ -113,7 +93,7 @@ def plot_cdr3_combination_distributions(CDR3_info, output_folder):
                 type = ((os.path.split(file)[1]).split("_"))[1]
                 x_label = (type + ' subgroups combination')
                 y_label = ('Frequency (%)')
-                plot_distributions3(item, file, x_label, y_label, 90)
+                plot_distributions(item, file, x_label, y_label, 90)
 
         else:
             for item, file in zip([V_hist, J_hist, VJ_hist], \
@@ -121,44 +101,10 @@ def plot_cdr3_combination_distributions(CDR3_info, output_folder):
                 type = ((os.path.split(file)[1]).split("_"))[1]
                 x_label = (type + ' subgroups combination')
                 y_label = ('Frequency (%)')
-                plot_distributions3(item, file, x_label, y_label, 90)
+                plot_distributions(item, file, x_label, y_label, 90)
 
 
-
-def plot_distributions1(histogram, file):
-
-    type = ((os.path.split(file)[1]).split("_"))[1]
-    #if type.lower() in ['v', 'd', 'j']:
-
-    n, bins, patches = plt.hist(x=histogram, bins='auto', color = '#0504aa',
-                                    alpha=0.7, rwidth=0.85)
-    plt.grid(axis='y', alpha=0.75)
-    plt.xlabel(type + ' subgroups combination')
-    plt.ylabel('Frequency (%)')
-    # plt.title('cdr3_length_distributions')
-    plt.text(23, 45, r'$\mu=15, b=3$')
-    maxfreq = n.max()
-    # Set a clean upper y-axis limit.
-    plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
-    plt.savefig(file, dpi=None, facecolor='w', edgecolor='w',
-                orientation='portrait', papertype=None, format=None,
-                transparent=False, bbox_inches=None, pad_inches=0.1,
-                frameon=None, metadata=None)
-    #plt.show()
-
-
-def plot_distributions2(histogram, file):
-    type = ((os.path.split(file)[1]).split("_"))[1]
-    letter_counts = Counter(histogram)
-    df = pandas.DataFrame.from_dict(letter_counts, orient='index')
-    df.plot(kind='bar')
-    plt.gcf().subplots_adjust(bottom=0.30)
-    plt.xlabel(type + ' subgroups combination')
-    plt.ylabel('Frequency (%)')
-    plt.savefig(file)
-
-
-def plot_distributions3(hist, file_name, x_label, y_label , rotation):
+def plot_distributions(hist, file_name, x_label, y_label, rotation):
 
     x_values = sorted(hist)
     y_values = [hist[x] for x in x_values]
@@ -207,40 +153,40 @@ def create_hist (data):
     return hist
 
 
-def plot_peptid_records(CDR3_info, peptides_elution, db_peptides, output_path):
-    num_of_db_list = []
+def plot_peptide_records(CDR3_info, peptides_elution, db_peptides, num_of_db_records, output_path):
+    clonotype_frequency_list = []
     elution_relative_freq = []
     list_of_cdr3 = []
+    dots_colors = []
+    colors = {
+        'IGH': 'red',
+        'IGL': 'green',
+        'IGK': 'purple'
+    }
 
-    #TODO: include only cdr3 peptides or all peptides or also peptides without db records?
     for item in CDR3_info:
-        peptid = item[0]
+        peptide = item[0]
         list_of_cdr3.append(item[4])
-        elution_relative_freq.append(peptides_elution[peptid][1])
-        num_of_db_list.append(len(db_peptides.get(peptid)))
+        elution_relative_freq.append(peptides_elution[peptide][1])
+        clonotype_frequency_list.append(len(db_peptides.get(peptide))/num_of_db_records)
+        dots_colors.append(colors[item[9]])
 
-    if(len(num_of_db_list) != len(elution_relative_freq) != len(list_of_cdr3)):
+    if(len(clonotype_frequency_list) != len(elution_relative_freq) != len(list_of_cdr3)):
         print('error')
-    #plt.pyplot.scatter(num_of_db_list, elution_counts, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax=None,
-                          #        alpha=None, linewidths=None, verts=None, edgecolors=None, *, data=None, **kwargs)[source]
+
 
     fig, ax = plt.subplots(figsize=(15, 8))
     ax.set_title('Proteomics vs. Genetics')
-    ax.set_xlabel('Number of records in DB')
+    ax.set_xlabel('Clonotype frequency')
     ax.set_ylabel('Relative frequency in the elution')
-    #ax.scatter(num_of_db_list, elution_counts, color='r')
-
 
     for i, txt in enumerate(list_of_cdr3):
-        ax.scatter(num_of_db_list[i], elution_relative_freq[i], color='r')
-        plt.scatter(num_of_db_list[i], elution_relative_freq[i], marker='x', color='red')
-        plt.text(num_of_db_list[i] + 0.001, elution_relative_freq[i] + 0.001, txt, fontsize=6, color='black')
-    #plt.show()
-        #ax.annotate(txt, (num_of_db_list[i], elution_relative_freq[i]))
+        ax.scatter(clonotype_frequency_list[i], elution_relative_freq[i], color='r')
+        plt.scatter(clonotype_frequency_list[i], elution_relative_freq[i], marker='x', color=dots_colors[i])
+        plt.text(clonotype_frequency_list[i], elution_relative_freq[i], txt, fontsize=7, color='black')
 
     plt.savefig(output_path)
     plt.close()
-
 
 
 def generate_alignment_report_pie_chart(output_path, CDR3_info, run=None):
@@ -257,11 +203,9 @@ def generate_alignment_report_pie_chart(output_path, CDR3_info, run=None):
 
     patches, texts = plt.pie(portions_percents, counterclock=False)
     plt.legend(patches, labels, loc="best")
-    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.axis('equal')
     plt.tight_layout()
     if not run:
         run = 'Replicate '+ output_path[output_path.find('run')+len('run')]
-    # title = '{} isotype distribution\n'.format(run)
-    # plt.title(title)
     plt.savefig(output_path, dpi=500, bbox_inches='tight')
     plt.close()

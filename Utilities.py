@@ -2,7 +2,6 @@ import logging
 import sys, argparse
 import os
 import zipfile
-#from pyunpack import Archive
 import gzip
 import tarfile
 from shutil import copyfile
@@ -17,8 +16,6 @@ import scipy as sp
 
 logger = logging.getLogger('Logs/PASA_pipeline.log')
 
-
-
 def parse_parameters():
 
     parser = argparse.ArgumentParser()
@@ -32,38 +29,13 @@ def parse_parameters():
 
     parser.add_argument('db_file', help='file or zip file of db ')
     parser.add_argument('digestion_enzyme', help='digestion_enzyme')
+    parser.add_argument('frequency_threshold', help='frequency_threshold')
     parser.add_argument('work_folder', help='work directory path')
-    parser.add_argument('user_email', help='user email')
-    parser.add_argument('job_title', help='job_title')
 
     args = parser.parse_args()
     return args
 
-
-
-def read_or_new_pickle(IsDebug, path, default):
-    '''
-    if dubug mode is off, dont use pickles.
-    if dubug mode is on, check if pickle is available and load it or create a new one if not.
-    '''
-    if IsDebug == False:
-        return default
-    else:
-        if os.path.isfile(path):
-            with open(path, "rb") as f:
-                try:
-                    return pickle.load(f)
-                except Exception:
-                    pass
-        with open(path, "wb") as f:
-            pickle.dump(default, f)
-        return default
-
-
-
-
 def check_if_zip_file (input, db_folder):
-
     if input.endswith('.zip'):
         f_zip = zipfile.ZipFile(input)
         f_zip.extractall(db_folder)
@@ -84,26 +56,28 @@ def check_if_zip_file (input, db_folder):
     else:
         print("invalid format")
 
-
-
-def create_dir1(path):
-    try:
-        os.makedirs(path)
-        logger.info(f'Creating directory: {path}')
-    except OSError as exception:
-        logger.info(f'Directory already exists: {path}')
-
-
-def create_dir2(path):
+def create_dir(path):
     if os.path.exists(path):
         logger.info(f'Directory already exists: {path}')
     else:
         logger.info(f'Creating directory: {path}')
         os.makedirs(path)
 
-
-def remove_content_dir_or_create(path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
-    os.makedirs(path)
+def read_or_new_pickle(IsDebug, path, default):
+    '''
+    if dubug mode is off, dont use pickles.
+    if dubug mode is on, check if pickle is available and load it or create a new one if not.
+    '''
+    if IsDebug == False:
+        return default
+    else:
+        if os.path.isfile(path):
+            with open(path, "rb") as f:
+                try:
+                    return pickle.load(f)
+                except Exception:
+                    pass
+        with open(path, "wb") as f:
+            pickle.dump(default, f)
+        return default
 

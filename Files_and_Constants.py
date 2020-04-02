@@ -5,9 +5,8 @@ import os.path
 
 
 #CONTANTS and PARAMETERS
-Y = 10 #TODO: this parameter used when checking the frequencing ratio EB/FT
-numThreads = 1
 IsDebug = False
+numThreads = 8
 
 remote_run = True if (os.path.exists('/bioseq/PASA')) else False
 src_folder = '/bioseq/PASA/' if (remote_run == True) else ''
@@ -15,7 +14,7 @@ src_folder = '/bioseq/PASA/' if (remote_run == True) else ''
 maxquant_exe_path = '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
 maxquant_version = '1.6.3.4'
 
-#src_folder = '/groups/pupko/kligsberg/pasa_src/'
+#src_folder = '/groups/pupko/kligsberg/pasa_src/'       #debugging
 
 pickle_folder = src_folder + 'Pickles/'
 config_sample_folder = src_folder
@@ -36,19 +35,22 @@ raw_files_e_1, raw_files_e_2, raw_files_e_3 = args.raw_files_elution_1, args.raw
 raw_files_f_1, raw_files_f_2, raw_files_f_3 = args.raw_files_flowthrough_1, args.raw_files_flowthrough_2, args.raw_files_flowthrough_3
 db_file = args.db_file
 enzyme = args.digestion_enzyme
+frequency_threshold = float(args.frequency_threshold)
 wd = args.work_folder
-user_email = args.user_email
-job_title = args.job_title
+#user_email = args.user_email
+#job_title = args.job_title
 
 run_number = wd.split('/')[-2]
 html_path = os.path.join(wd, 'output.html')
+user_email_file = os.path.join(wd, 'user_email.txt')
+job_title_file = os.path.join(wd, 'job_title.txt')
 
 logs = os.path.join(wd , "Logs/")
 db_folder = os.path.join(wd , 'DB_files/')
 
-util.create_dir2(logs)
-util.create_dir2(db_folder)
-util.create_dir2(pickle_folder)
+util.create_dir(logs)
+util.create_dir(db_folder)
+util.create_dir(pickle_folder)
 
 log_file =logs + 'PASA_pipeline.log'
 
@@ -57,10 +59,10 @@ path_input_ft = os.path.join(wd , "flowthrough_files")
 output_files = os.path.join(wd , "output_files/")
 pictures_folder = output_files + "pics/"
 
-util.create_dir2(path_input_eb)
-util.create_dir2(path_input_ft)
-util.create_dir2(output_files)
-util.create_dir2(pictures_folder)
+util.create_dir(path_input_eb)
+util.create_dir(path_input_ft)
+util.create_dir(output_files)
+util.create_dir(pictures_folder)
 
 maxquant_output_eb_folder = os.path.join(path_input_eb ,"combined", "txt")
 maxquant_output_ft_folder = os.path.join(path_input_ft ,"combined", "txt")
