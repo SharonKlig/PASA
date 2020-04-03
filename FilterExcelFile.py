@@ -1,7 +1,6 @@
 import logging
 import pandas as pd
 from openpyxl import Workbook
-import xlrd
 import csv
 import os
 import os.path
