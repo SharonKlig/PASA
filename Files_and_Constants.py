@@ -11,7 +11,7 @@ numThreads = 8
 remote_run = True if (os.path.exists('/bioseq/PASA')) else False
 src_folder = '/bioseq/PASA/' if (remote_run == True) else ''
 
-maxquant_exe_path = '/share/apps/maxquant/maxquant-1.6.3.4/bin/MaxQuantCmd.exe'
+maxquant_exe_path = '/powerapps/share/centos7/MaxQuant/MaxQuant-1.6.3.4/bin/MaxQuantCmd.exe'
 maxquant_version = '1.6.3.4'
 
 #src_folder = '/groups/pupko/kligsberg/pasa_src/'       #debugging
