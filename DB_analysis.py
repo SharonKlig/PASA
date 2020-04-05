@@ -1,15 +1,11 @@
 import logging
-import regex as re
 import os
 import os.path
 from os.path import isfile, join
-from difflib import SequenceMatcher
 import csv
 import DB_record as dbr
-import timeit
 import re
 import time
-#from Files_and_Constants import log_file
 
 logger = logging.getLogger('Logs/PASA_pipeline.log')
 
