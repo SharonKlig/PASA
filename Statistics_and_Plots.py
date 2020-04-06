@@ -154,6 +154,8 @@ def create_hist (data):
 
 
 def plot_peptide_records(CDR3_info, peptides_elution, db_peptides, num_of_db_records, output_path):
+    if len(CDR3_info) == 0:
+        return
     clonotype_frequency_list = []
     elution_relative_freq = []
     list_of_cdr3 = []
