@@ -55,16 +55,16 @@ if __name__ == '__main__':
 
     try:
         if not(os.path.exists(FC.eb_file)):      #checks if peptides.txt was created from previous session
-            for file, name in zip([FC.raw_files_e_1,FC.raw_files_e_2, FC.raw_files_e_3], ['raw_files_e_1','raw_files_e_2','raw_files_e_3']):
+            for file, name in zip([FC.raw_files_e_1,FC.raw_files_e_2, FC.raw_files_e_3], ['elution_data_1','elution_data_2','elution_data_3']):
                 if FC.remote_run:
                     raw_file_new_name = os.path.join(FC.path_input_eb, name + '.raw')
                     subprocess.call(["mv", file, raw_file_new_name])
                     logger.info("raw files (elution) were moved to: " + raw_file_new_name)
                 else:
                     shutil.move(file, os.path.join(FC.path_input_eb, name+'.raw'))
-            FC.raw_files_e_1, FC.raw_files_e_2, FC.raw_files_e_3 = os.path.join(FC.path_input_eb, 'raw_files_e_1.raw'), \
-                                                                   os.path.join(FC.path_input_eb, 'raw_files_e_2.raw'), \
-                                                                   os.path.join(FC.path_input_eb, 'raw_files_e_3.raw')
+            FC.raw_files_e_1, FC.raw_files_e_2, FC.raw_files_e_3 = os.path.join(FC.path_input_eb, 'elution_data_1.raw'), \
+                                                                   os.path.join(FC.path_input_eb, 'elution_data_2.raw'), \
+                                                                   os.path.join(FC.path_input_eb, 'elution_data_3.raw')
             params_e = [FC.raw_files_e_1,FC.raw_files_e_2, FC.raw_files_e_3, FC.db_folder, FC.enzyme, FC.path_input_eb]
             mq.create_xml_config_file(FC.config_folder_eb, params_e, FC.numThreads, FC.config_sample_folder)
             logger.info("mqpar file was created (elution)")
@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
 
         if not(os.path.exists(FC.ft_file)):     #checks if peptides.txt was created from previous session
-            for file, name in zip([FC.raw_files_f_1,FC.raw_files_f_2, FC.raw_files_f_3], ['raw_files_f_1','raw_files_f_2','raw_files_f_3']):
+            for file, name in zip([FC.raw_files_f_1,FC.raw_files_f_2, FC.raw_files_f_3], ['flowthrough_data_1','flowthrough_data_2','flowthrough_data_3']):
                 if FC.remote_run:
                     raw_file_new_name = os\
                         .path.join(FC.path_input_ft, name + '.raw')
@@ -82,9 +82,9 @@ if __name__ == '__main__':
                     logger.info("raw files (flowthrough) were moved to: " + raw_file_new_name)
                 else:
                     shutil.move(file, os.path.join(FC.path_input_ft, name+'.raw'))
-            FC.raw_files_f_1, FC.raw_files_f_2, FC.raw_files_f_3 = os.path.join(FC.path_input_ft, 'raw_files_f_1.raw'), \
-                                                                   os.path.join(FC.path_input_ft, 'raw_files_f_2.raw'), \
-                                                                   os.path.join(FC.path_input_ft, 'raw_files_f_3.raw')
+            FC.raw_files_f_1, FC.raw_files_f_2, FC.raw_files_f_3 = os.path.join(FC.path_input_ft, 'flowthrough_data_1.raw'), \
+                                                                   os.path.join(FC.path_input_ft, 'flowthrough_data_2.raw'), \
+                                                                   os.path.join(FC.path_input_ft, 'flowthrough_data_3.raw')
             params_f = [FC.raw_files_f_1,FC.raw_files_f_2, FC.raw_files_f_3, FC.db_folder, FC.enzyme, FC.path_input_ft]
             mq.create_xml_config_file(FC.config_folder_ft, params_f, FC.numThreads, FC.config_sample_folder)
             logger.info("mqpar file was created (flowthrough)")
