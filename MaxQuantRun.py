@@ -1,7 +1,6 @@
 import subprocess
 import xml.etree.ElementTree as ET
 from shutil import copyfile
-import regex as re
 import os.path
 from os.path import isfile, join
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
@@ -47,7 +46,12 @@ def create_xml_config_file(config_folder, params, numThreads, config_sample_fold
     root.find('parameterGroups/parameterGroup/enzymes/string').text = params[4]
     root.find('numThreads').text = str(numThreads)
     root.find('maxQuantVersion').text = fc.maxquant_version
-    root.find('matchBetweenRuns').text = 'False'
+
+    root.find('matchBetweenRuns').text = 'True'
+    root.find('matchBetweenRunsFdr').text = 'False'
+    root.find('matchingTimeWindow').text = '0.7'
+    root.find('alignmentTimeWindow').text = '0'
+
 
     tree.write(config_file)
 

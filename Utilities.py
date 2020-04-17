@@ -31,6 +31,7 @@ def parse_parameters():
     parser.add_argument('digestion_enzyme', help='digestion_enzyme')
     parser.add_argument('frequency_threshold', help='frequency_threshold')
     parser.add_argument('work_folder', help='work directory path')
+    parser.add_argument('overlap_threshold', help='overlap_threshold', nargs='?', default = '1')
 
     args = parser.parse_args()
     return args

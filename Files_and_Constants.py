@@ -37,11 +37,10 @@ db_file = args.db_file
 enzyme = args.digestion_enzyme
 frequency_threshold = float(args.frequency_threshold)
 wd = args.work_folder
-#user_email = args.user_email
-#job_title = args.job_title
+overlap_threshold = int(args.overlap_threshold)
 
 run_number = wd.split('/')[-2]
-html_path = os.path.join(wd, 'output.html')
+html_path = os.path.join(wd,'output.html')
 user_email_file = os.path.join(wd, 'user_email.txt')
 job_title_file = os.path.join(wd, 'job_title.txt')
 

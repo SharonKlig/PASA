@@ -116,7 +116,7 @@ def check_if_peptide_in_db (db_dict, peptides_list):
     return new_filtered_peptide_dict , non_info
 
 
-def check_if_cdr3_is_common (new_peptide_dict, non_info):
+def check_if_cdr3_is_common (new_peptide_dict, non_info, overlap_threshold = 1):
     #for all peptides that are in db, check if cdr3 is common
     info = []
     CDR3_info = []
@@ -142,7 +142,7 @@ def check_if_cdr3_is_common (new_peptide_dict, non_info):
             for i in range(len((value_p)[0])):
                 peptide_start, peptide_end, cdr3_start, cdr3_end = value_p[1][i][0], value_p[1][i][1], value_p[0][i].cdr3_start, \
                                                      value_p[0][i].cdr3_end
-                if is_there_overlap_bigger_than_threshold (peptide_start, peptide_end, cdr3_start, cdr3_end, 1):   #when overlap is at least 1aa
+                if is_there_overlap_bigger_than_threshold (peptide_start, peptide_end, cdr3_start, cdr3_end, overlap_threshold):   #when overlap is at least 1aa
                     continue
                 else:
                     is_there_overlap = False

@@ -1,9 +1,12 @@
 import os
+import subprocess
+
 #from Files_and_Constants import log_file
 
 #logger = logging.getLogger(log_file)
 
 def add_closing_html_tags(html_path, CONSTS, run_number):
+    subprocess.call(["chmod777", html_path])
     with open(html_path, 'a') as f:
         f.write(
             f'<hr>\n<h4 class=footer><p align=\'center\'>Questions and comments are welcome! Please ' \

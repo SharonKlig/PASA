@@ -153,12 +153,12 @@ if __name__ == '__main__':
                 info = pickle.load(open(FC.pickle_file_info, 'rb'))
                 CDR3_info = pickle.load(open(FC.pickle_file_cdr3, 'rb'))
             except (OSError, IOError, EOFError):
-                non_info, info, CDR3_info = dbf.check_if_cdr3_is_common(db_peptides, non_info)
+                non_info, info, CDR3_info = dbf.check_if_cdr3_is_common(db_peptides, non_info, FC.overlap_threshold)
                 pickle._dump(non_info, open(FC.pickle_file_non_info, 'wb'))
                 pickle._dump(info, open(FC.pickle_file_info, 'wb'))
                 pickle._dump(CDR3_info, open(FC.pickle_file_cdr3, 'wb'))
         else:
-            non_info, info, CDR3_info = dbf.check_if_cdr3_is_common(db_peptides, non_info)
+            non_info, info, CDR3_info = dbf.check_if_cdr3_is_common(db_peptides, non_info, FC.overlap_threshold)
 
 
         print("creating non info, info and cdr3 info files\n")
