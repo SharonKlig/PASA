@@ -26,7 +26,7 @@ from email_sender import send_email
 for handler in logging.root.handlers[:]:
     logging.root.removeHandler(handler)
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s [%(levelname)s] - %(message)s',
     filename=FC.log_file)
 logger = logging.getLogger(FC.log_file)
