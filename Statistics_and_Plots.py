@@ -111,8 +111,8 @@ def plot_distributions(hist, file_name, x_label, y_label, rotation):
     sum_y_values = sum(y_values) / 100
     y_values = [round(y / sum_y_values, 2) for y in y_values]
 
-    logger.debug(x_values)
-    logger.debug(y_values)
+    # logger.debug(x_values)
+    # logger.debug(y_values)
 
     barplot = sns.barplot(x_values, y_values, color='mediumslateblue')
     ylim = [0, 1.2 * max(y_values)]

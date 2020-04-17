@@ -6,7 +6,7 @@ import subprocess
 #logger = logging.getLogger(log_file)
 
 def add_closing_html_tags(html_path, CONSTS, run_number):
-    subprocess.call(["chmod777", html_path])
+    subprocess.call(["chmod 777", html_path])
     with open(html_path, 'a') as f:
         f.write(
             f'<hr>\n<h4 class=footer><p align=\'center\'>Questions and comments are welcome! Please ' \
@@ -71,6 +71,7 @@ def edit_success_html(html_path, final_output_dir_name, run_number, CONSTS, file
 
     html_text = ''
     try:
+        subprocess.call(["chmod 777", html_path])
         with open(html_path) as f:
             html_text = f.read()
         # The initial file exists (generate by the cgi) so we can read and parse it.
@@ -104,6 +105,7 @@ def edit_success_html(html_path, final_output_dir_name, run_number, CONSTS, file
 def edit_failure_html(html_path, run_number, msg, CONSTS):
     html_text = ''
     try:
+        subprocess.call(["chmod 777", html_path])
         with open(html_path) as f:
             html_text = f.read()
         # The initial file exists (generate by the cgi) so we can read and parse it.
