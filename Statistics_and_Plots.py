@@ -1,14 +1,14 @@
 import logging
 from collections import Counter
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 import os
 import pandas
 from collections import Counter
 import seaborn as sns
-#from Files_and_Constants import *
-
-logger = logging.getLogger('Logs/PASA_pipeline.log')
+import sys
+logger = logging.getLogger('Logs/PASA_pipeline.log').setLevel(logging.INFO)
 
 
 
@@ -162,30 +162,37 @@ def plot_peptide_records(CDR3_info, peptides_elution, db_peptides, num_of_db_rec
     dots_colors = []
     colors = {
         'IGH': 'red',
-        'IGL': 'green',
-        'IGK': 'purple'
+        'IGL': 'yellow',
+        'IGK': 'blue'
     }
 
     for item in CDR3_info:
         peptide = item[0]
         list_of_cdr3.append(item[4])
         elution_relative_freq.append(peptides_elution[peptide][1])
-        clonotype_frequency_list.append(len(db_peptides.get(peptide))/num_of_db_records)
+        clonotype_frequency_list.append(len(db_peptides.get(peptide)[0])/num_of_db_records)
         dots_colors.append(colors[item[9]])
 
     if(len(clonotype_frequency_list) != len(elution_relative_freq) != len(list_of_cdr3)):
         print('error')
 
 
-    fig, ax = plt.subplots(figsize=(15, 8))
+    fig, ax = plt.subplots(figsize=(15, 08))
     ax.set_title('Proteomics vs. Genetics')
     ax.set_xlabel('Clonotype frequency')
     ax.set_ylabel('Relative frequency in the elution')
 
     for i, txt in enumerate(list_of_cdr3):
-        ax.scatter(clonotype_frequency_list[i], elution_relative_freq[i], color='r')
-        plt.scatter(clonotype_frequency_list[i], elution_relative_freq[i], marker='x', color=dots_colors[i])
+        ax.scatter(clonotype_frequency_list[i], elution_relative_freq[i], color='w')
+        plt.scatter(clonotype_frequency_list[i], elution_relative_freq[i], marker='o', color=dots_colors[i])
         plt.text(clonotype_frequency_list[i], elution_relative_freq[i], txt, fontsize=7, color='black')
+    epsilon = 0.0000005
+    plt.axis([min(clonotype_frequency_list) - epsilon, max(clonotype_frequency_list) + epsilon, min(elution_relative_freq) - epsilon , max(elution_relative_freq) + epsilon])
+
+    red_patch = mpatches.Patch(color='red', label='IGH')
+    yellow_patch = mpatches.Patch(color='yellow', label='IGL')
+    blue_patch = mpatches.Patch(color='blue', label='IGK')
+    plt.legend(handles=[red_patch, yellow_patch, blue_patch])
 
     plt.savefig(output_path)
     plt.close()

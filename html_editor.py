@@ -70,7 +70,7 @@ def edit_success_html(html_path, final_output_dir_name, run_number, CONSTS, file
 
     html_text = ''
     try:
-        with open(html_path, 'w') as f:
+        with open(html_path) as f:
             html_text = f.read()
         # The initial file exists (generate by the cgi) so we can read and parse it.
         html_text = html_text.replace('RUNNING', 'FINISHED').replace(f'{CONSTS.WEBSERVER_NAME} is now processing your request. This page will be automatically updated every {CONSTS.RELOAD_INTERVAL} seconds (until the job is done). You can also reload it manually. Once the job has finished, the output will appear below. ', '')
@@ -103,7 +103,7 @@ def edit_success_html(html_path, final_output_dir_name, run_number, CONSTS, file
 def edit_failure_html(html_path, run_number, msg, CONSTS):
     html_text = ''
     try:
-        with open(html_path, 'w') as f:
+        with open(html_path) as f:
             html_text = f.read()
         # The initial file exists (generate by the cgi) so we can read and parse it.
         html_text = html_text.replace('RUNNING', 'FAILED').replace(f'{CONSTS.WEBSERVER_NAME} is now processing your request. This page will be automatically updated every {CONSTS.RELOAD_INTERVAL} seconds (until the job is done). You can also reload it manually. Once the job has finished, several links to the output files will appear below. ', '')
